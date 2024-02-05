@@ -36,4 +36,7 @@ public class Courses {
 	@Column(name = "course_price")
 	private int coursePrice;
 	
+	@Column(name = "course_isPublished")
+	private boolean isPublished;
+	
 }

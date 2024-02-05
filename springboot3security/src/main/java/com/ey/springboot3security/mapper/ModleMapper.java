@@ -1,7 +1,9 @@
 package com.ey.springboot3security.mapper;
 
 
+import com.ey.springboot3security.dto.CourseDto;
 import com.ey.springboot3security.dto.UserDto;
+import com.ey.springboot3security.entity.Courses;
 import com.ey.springboot3security.entity.UserInfo;
 
 public class ModleMapper {
@@ -17,13 +19,33 @@ public class ModleMapper {
 	}
 	
 	public static UserInfo maptoUser(UserDto userDto) {
-		UserInfo user = new UserInfo();
-		user.setId(user.getId());
-		user.setName(userDto.getName());
-		user.setEmail(userDto.getName());
-		user.setPassword(userDto.getPassword());
-		user.setRoles(userDto.getRoles());
-		return user;
+		return new UserInfo(
+				userDto.getId(),
+				userDto.getName(),
+				userDto.getEmail(),
+				userDto.getPassword(),
+				userDto.getRoles()
+		);
+		
 	}
 	
+	public static Courses mapToCourse(CourseDto courseDto) {
+		return new Courses(
+				courseDto.getCourseId(),
+				courseDto.getCourseName(),
+				courseDto.getCourseDesc(),
+				courseDto.getCoursePrice(),
+				courseDto.isPublished()
+		);
+	}
+	
+	public static CourseDto mapToCourseDto(Courses course) {
+		return new CourseDto(
+					course.getCourseId(),
+					course.getCourseName(),
+					course.getCourseDesc(),
+					course.getCoursePrice(),
+					course.isPublished()
+		);
+	}
 }
