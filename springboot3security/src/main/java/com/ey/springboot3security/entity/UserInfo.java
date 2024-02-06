@@ -1,5 +1,6 @@
 package com.ey.springboot3security.entity;
 
+import java.util.List;
 import java.util.Set;
 
 import jakarta.persistence.CascadeType;
@@ -40,5 +41,12 @@ public class UserInfo {
 	
 	@Column(name = "user_role")
 	private String roles;
+	
+	@OneToMany(mappedBy = "mappedUserId", cascade = CascadeType.ALL)
+	private List<CourseUser> courseUserList;
+	
+	public UserInfo(int mappedUserId) {
+		this.id = mappedUserId;
+	}
 	
 } 

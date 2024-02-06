@@ -1,5 +1,6 @@
 package com.ey.springboot3security.entity;
 
+import java.util.List;
 import java.util.Set;
 
 import jakarta.persistence.CascadeType;
@@ -38,5 +39,13 @@ public class Courses {
 	
 	@Column(name = "course_isPublished")
 	private boolean isPublished;
+	
+	@OneToMany(mappedBy = "mappedCourseId",cascade = CascadeType.ALL)
+	private List<CourseUser> courseUserList; 
+	
+	
+	public Courses(int mappedCourseId) {
+		this.courseId = mappedCourseId;
+	}
 	
 }
