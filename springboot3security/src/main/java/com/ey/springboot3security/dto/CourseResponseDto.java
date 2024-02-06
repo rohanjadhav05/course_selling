@@ -9,9 +9,9 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class CourseUserDto {
-	
-	private Integer courseUserId;
-    private Integer mappedUserId;
-    private Integer mappedCourseId;
+public class CourseResponseDto {
+	private Integer courseId;
+	private String courseName;
+	private String courseDesc;
+	private Integer coursePrice;
 }

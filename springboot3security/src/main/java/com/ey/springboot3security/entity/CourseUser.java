@@ -16,26 +16,28 @@ import jakarta.persistence.UniqueConstraint;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Entity
 @Table(name = "tbl_course_user", uniqueConstraints = {
-        @UniqueConstraint(columnNames = {"mapped_user_id", "mapped_user_id"})
+        @UniqueConstraint(columnNames = {"mapped_user_id", "mapped_course_id"})
      })
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString(exclude = { "mappedUserId", "mappedCourseId" })
 public class CourseUser {
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_course_id")
-    private Long courseUserId;
+    @Column(name = "course_user_id")
+    private Integer courseUserId;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "mapped_user_id", nullable = false)
     private UserInfo mappedUserId;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "course_id", nullable = false)
+    @JoinColumn(name = "mapped_course_id", nullable = false)
     private Courses mappedCourseId;
 }

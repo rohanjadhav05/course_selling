@@ -15,18 +15,20 @@ import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Entity
 @Table(name = "tbl_course")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString(exclude =  "courseUserList" )
 public class Courses {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "course_id")
-	private int courseId;
+	private Integer courseId;
 	
 	@Column(name = "course_name", nullable = false)
 	private String courseName;
@@ -35,7 +37,7 @@ public class Courses {
 	private String courseDesc;
 	
 	@Column(name = "course_price")
-	private int coursePrice;
+	private Integer coursePrice;
 	
 	@Column(name = "course_isPublished")
 	private boolean isPublished;

@@ -22,13 +22,13 @@ import lombok.ToString;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
+@ToString(exclude = "courseUserList")
 public class UserInfo { 
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "user_id")
-	private int id; 
+	private Integer id; 
 	
 	@Column(name = "user_name")
 	private String name; 

@@ -9,9 +9,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CourseDto {
 	
-	private int courseId;
+	private Integer courseId;
 	private String courseName;
 	private String courseDesc;
-	private int coursePrice;
+	private Integer coursePrice;
 	private boolean isPublished;
 }
