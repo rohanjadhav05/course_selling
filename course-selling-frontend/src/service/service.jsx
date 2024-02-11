@@ -5,3 +5,7 @@ const REST_API_BASE_URL = "http://localhost:8080/home";
 export const createUser = (userDto) => {
     return axios.post(REST_API_BASE_URL+"/signup", userDto);
 }
+
+export const login = (loginDto) => {
+    return axios.post(REST_API_BASE_URL+"/login", loginDto);
+}

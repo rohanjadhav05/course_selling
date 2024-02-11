@@ -24,8 +24,8 @@ export default function Navbar() {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }} style={{textAlign :'center'}}>
             Welcome to Atharva Classes
           </Typography>
-          <Button color="inherit" href="/logIn">Login</Button>
-          <Button color="inherit" href="/signUp">SignUp</Button>
+          <Button color="inherit" href="/LogIn">Login</Button>
+          <Button color="inherit" href="/SignUp">SignUp</Button>
         </Toolbar>
       </AppBar>
     </Box>
