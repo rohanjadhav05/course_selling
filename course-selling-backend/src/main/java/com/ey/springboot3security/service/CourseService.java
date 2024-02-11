@@ -8,4 +8,6 @@ public interface CourseService {
 	CourseDto addCourse(CourseDto courseDto);
 	
 	Map<String, Object> updateCourse(int courseId, CourseDto courseDto);
+	
+	
 }

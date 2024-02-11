@@ -11,7 +11,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,7 +27,9 @@ import com.ey.springboot3security.entity.UserInfo;
 import com.ey.springboot3security.mapper.ModleMapper;
 import com.ey.springboot3security.repository.UserInfoRepository;
 import com.ey.springboot3security.service.JwtService;
-import com.ey.springboot3security.service.UserInfoService; 
+import com.ey.springboot3security.service.UserInfoService;
+
+import jakarta.websocket.server.PathParam; 
 
 @RestController
 @RequestMapping("/home")
@@ -55,18 +59,6 @@ public class HomeController {
 		return Response.success(service.addUser(user)); 
 	} 
 
-//	@GetMapping("/user/userProfile") 
-//	@PreAuthorize("hasAuthority('ROLE_USER')") 
-//	public String userProfile() { 
-//		return "Welcome to User Profile"; 
-//	} 
-
-//	@GetMapping("/admin/adminProfile") 
-//	@PreAuthorize("hasAuthority('ROLE_ADMIN')") 
-//	public String adminProfile() { 
-//		return "Welcome to Admin Profile"; 
-//	} 
-
 	@PostMapping("/login") 
 	public ResponseEntity<?> authenticateAndGetToken(@RequestBody AuthRequest authRequest) { 
 		Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
@@ -83,6 +75,28 @@ public class HomeController {
 			throw new UsernameNotFoundException("invalid user request !"); 
 		} 
 	} 
+	
+	@GetMapping("/userExist/{name}")
+	public ResponseEntity<?> checkIfUserExits(@PathVariable("name") String name){
+		Optional<UserInfo> userInfo = userRepo.findByName(name);
+		if(userInfo.isPresent()) {
+			return Response.success(true);
+		}else {
+			return Response.error("User doesn't Exists");
+		}
+	}
+	
+	@PutMapping("/changePassword")
+	public ResponseEntity<?> changePassword(@RequestBody UserDto userDto){
+		Optional<UserInfo> userInfo = userRepo.findByName(userDto.getName());
+		if(userInfo.isPresent()) {
+			service.changePassword(userDto);
+			return Response.success("Password Changed Successfully");
+		}else {
+			return Response.error("User Doesn't Exists");
+		}
+		
+	}
 
 } 
 
