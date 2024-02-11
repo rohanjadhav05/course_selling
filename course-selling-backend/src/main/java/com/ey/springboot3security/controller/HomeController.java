@@ -1,5 +1,8 @@
 package com.ey.springboot3security.controller;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -12,11 +15,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ey.springboot3security.dto.LoginResponeDto;
 import com.ey.springboot3security.dto.Response;
 import com.ey.springboot3security.dto.UserDto;
+import com.ey.springboot3security.dto.UserInfoDto;
 import com.ey.springboot3security.entity.AuthRequest;
 import com.ey.springboot3security.entity.UserInfo;
 import com.ey.springboot3security.mapper.ModleMapper;
+import com.ey.springboot3security.repository.UserInfoRepository;
 import com.ey.springboot3security.service.JwtService;
 import com.ey.springboot3security.service.UserInfoService; 
 
@@ -32,6 +38,9 @@ public class HomeController {
 
 	@Autowired
 	private AuthenticationManager authenticationManager; 
+	
+	@Autowired
+	private UserInfoRepository userRepo;
 
 	@GetMapping("/welcome") 
 	public String welcome() { 
@@ -58,9 +67,16 @@ public class HomeController {
 
 	@PostMapping("/login") 
 	public ResponseEntity<?> authenticateAndGetToken(@RequestBody AuthRequest authRequest) { 
-		Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword())); 
+		Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
 		if (authentication.isAuthenticated()) {  
-			return Response.success(jwtService.generateToken(authRequest.getUsername())); 
+			Optional<UserInfo> userInfo = userRepo.findByName(authRequest.getUsername());
+			UserInfo user = userInfo.get();
+			LoginResponeDto loginDto = new LoginResponeDto( user.getId(),
+															user.getName(),
+															user.getEmail(),
+															user.getRoles(),
+															jwtService.generateToken(authRequest.getUsername()));
+			return Response.success(loginDto); 
 		} else { 
 			throw new UsernameNotFoundException("invalid user request !"); 
 		} 

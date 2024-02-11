@@ -30,7 +30,7 @@ public class UserInfo {
 	@Column(name = "user_id")
 	private Integer id; 
 	
-	@Column(name = "user_name")
+	@Column(name = "user_name", unique = true, nullable = false)
 	private String name; 
 	
 	@Column(name = "user_email", unique = true, nullable = false)
