@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.ey</groupId>
-	<artifactId>springboot3security</artifactId>
+	<artifactId>course-selling-backend</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Course_Selling</name>
 	<description>Bakend for course Selling</description>
