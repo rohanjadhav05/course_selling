@@ -9,5 +9,4 @@ public interface CourseService {
 	
 	Map<String, Object> updateCourse(int courseId, CourseDto courseDto);
 	
-	
 }

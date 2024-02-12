@@ -44,12 +44,21 @@ public class CourseServiceImpl implements CourseService {
 	
 	
 	public List<CourseDto> getPublishedCourse(){
-		List<Courses> listOfCourse = courseRepository.getPublishedCourse();
+		List<Courses> listOfCourse = courseRepository.findByisPublished(true);
 		List<CourseDto> courseDtoList = new ArrayList<>();
 		for(Courses c : listOfCourse) {
 			courseDtoList.add(ModleMapper.mapToCourseDto(c));
 		}
 		return courseDtoList;
+	}
+	
+	public List<CourseDto> getAllCourses(){
+		List<Courses> listOfAllCourses = courseRepository.findAll();
+		List<CourseDto> listOfCourseDto = new ArrayList<>();
+		for(Courses i : listOfAllCourses) {
+			listOfCourseDto.add(ModleMapper.mapToCourseDto(i));
+		}
+		return listOfCourseDto;
 	}
 
 }
