@@ -8,8 +8,12 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import Link from '@mui/material/Link';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import { useNavigate } from 'react-router-dom';
+
 
 export default function Navbar() {
+
+  const navigator = useNavigate();
 
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
   console.log("loginStatus :  "+localStorage['loginStatus']);
@@ -25,6 +29,7 @@ export default function Navbar() {
     localStorage.removeItem("jwt");
     localStorage.removeItem("id");
     location.reload();
+    navigator("/");
   }
 
   return (
