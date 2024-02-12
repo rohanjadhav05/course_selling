@@ -1,6 +1,7 @@
 package com.ey.springboot3security.service;
 
 import com.ey.springboot3security.dto.UserDto;
+import com.ey.springboot3security.entity.AuthRequest;
 import com.ey.springboot3security.entity.UserInfo; 
 import com.ey.springboot3security.repository.UserInfoRepository; 
 import org.springframework.beans.factory.annotation.Autowired; 
@@ -37,9 +38,9 @@ public class UserInfoService implements UserDetailsService {
 		return "User Added Successfully"; 
 	} 
 	
-	public String changePassword(UserDto userDto){
-		UserInfo userDetail = repository.findByName(userDto.getName()).get();
-		userDetail.setPassword(encoder.encode(userDto.getPassword()));
+	public String changePassword(AuthRequest authRequest){
+		UserInfo userDetail = repository.findByName(authRequest.getUsername()).get();
+		userDetail.setPassword(encoder.encode(authRequest.getUsername()));
 		repository.save(userDetail);
 		return "Password Updated Successfully";
 	}

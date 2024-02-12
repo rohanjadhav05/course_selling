@@ -7,12 +7,11 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import Link from "@material-ui/core/Link";
 import Paper from "@material-ui/core/Paper";
-import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
-import { login } from "../service/service";
+import { changePassword, userExits } from "../service/service";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
@@ -46,59 +45,58 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
+const ForgetPasswordComponent = () => {
+    const classes = useStyles();
+    const [username, SetUserName] = useState('');
+    const [password, SetPassword] = useState('');
+    const [isExists, setIsExists] = useState(false);
+    const navigator = useNavigate();
 
-export const SignIn = () => {
-
-  const classes = useStyles();
-  const [username, SetUsername] = useState('');
-  const [password, SetPassword] = useState('');
-  const navigator = useNavigate();
-
-  function loginUser(e){
-    e.preventDefault();
-    const loginUserDto = {username, password};
-    if(username.length == 0){
-        toast.warning("Please Enter UserName");
-    }
-    else if(password.length == 0){
-        toast.warning("Please Enter Password");
-    }
-    else{
-        login(loginUserDto).then((response) => {
-            const result = response.data
-            console.log("Result : "+result);
-            if(result['status'] == 'success'){
-               const payload = result['data'].jwtToken;
-                localStorage['id'] = result['data'].id;
-                console.log(result['data'].id);
-                localStorage['jwt'] = result['data'].jwtToken
-                localStorage['loginStatus'] = 1
-                console.log('JWT : ', result['data'].jwtToken)
-                const message = 'Welcome to Atharva Classes '
-                if (result['data'].roles == 'ROLE_ADMIN') {
-                    navigator('/Admin', { state: { message } })
-                } else if (result['data'].roles == 'ROLE_USER') {
-                    navigator('/User', { state: { message } })
-                }
+    function CheckIfUserExists(e){
+        e.preventDefault();
+        console.log(username);
+        userExits(username).then((response) => {
+            const result = response.data;
+            if(result.status == 'success'){
+                setIsExists(true);
+                toast.success("User Exists");
             }
-           // toast.success("Login Successfully");
+            else{
+                toast.error("User Doesn't Exists");
+            }
         }).catch(err => {
-            toast.error("InCorrect Username or Password");
+            console.error(err);
         })
-    } 
-  }
+    }
+
+    function forgPassword(e){
+        e.preventDefault();
+        console.log(username+" : "+password);
+        const loginDto = { username, password};
+        changePassword(loginDto).then((response) => {
+            const result = response.data;
+            if(result.status == 'success'){
+                toast.success("Password changed Successfully !!!");
+                navigator("/LogIn");
+            }else{
+                toast.error("Failed Changing Password");
+            }
+        }).catch(err => {
+            console.log(err);
+        })
+    }
 
   return (
-    <Grid container component="main" className={classes.root} alignItems="center" justifyContent="center">
+    <Grid container component="main" className={classes.root}>
       <CssBaseline />
-      <Grid item xs={false} sm={7} md={4}/>
+      <Grid item xs={false} sm={4} md={7}/>
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
         <div className={classes.paper}>
           <Avatar className={classes.avatar}>
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign in
+            Forget Password
           </Typography>
           <form className={classes.form} noValidate>
             <TextField
@@ -112,43 +110,57 @@ export const SignIn = () => {
               autoComplete="name"
               autoFocus
               onChange={(e) => {
-                SetUsername(e.target.value)
+                SetUserName(e.target.value)
               }}
+              disabled={isExists}
             />
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-              onChange={(e) => {
-                SetPassword(e.target.value)
-              }}
-            />
+            { !isExists &&
+                         <Button type="submit"
+                                fullWidth
+                                variant="contained"
+                                color="primary"
+                                className={classes.submit}
+                                onClick={CheckIfUserExists}
+                       >
+                         Check if User Exists
+                       </Button>
+            }
+            {
+                isExists && 
+                    <TextField
+                    variant="outlined"
+                    margin="normal"
+                    required
+                    fullWidth
+                    name="password"
+                    label="Password"
+                    type="password"
+                    id="password"
+                    autoComplete="current-password"
+                    onChange={(e) => {
+                        SetPassword(e.target.value)
+                    }}
+                />
+            }
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
             />
-            <Button
+            {
+                isExists &&
+                <Button
               type="submit"
               fullWidth
               variant="contained"
               color="primary"
               className={classes.submit}
-              onClick={loginUser}
+              onClick={forgPassword}
             >
-              Sign In
+              Forgot Password
             </Button>
+
+            }
             <Grid container>
-              <Grid item xs>
-                <Link href="/ForgetPassword" variant="body2">
-                  Forgot password?
-                </Link>
-              </Grid>
               <Grid item>
                 <Link href="/Signup" variant="body2">
                   {"Don't have an account? Sign Up"}
@@ -159,5 +171,7 @@ export const SignIn = () => {
         </div>
       </Grid>
     </Grid>
-  );
+  )
 }
+
+export default ForgetPasswordComponent

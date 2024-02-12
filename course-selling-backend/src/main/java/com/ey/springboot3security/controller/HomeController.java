@@ -87,10 +87,10 @@ public class HomeController {
 	}
 	
 	@PutMapping("/changePassword")
-	public ResponseEntity<?> changePassword(@RequestBody UserDto userDto){
-		Optional<UserInfo> userInfo = userRepo.findByName(userDto.getName());
+	public ResponseEntity<?> changePassword(@RequestBody AuthRequest authRequest){
+		Optional<UserInfo> userInfo = userRepo.findByName(authRequest.getUsername());
 		if(userInfo.isPresent()) {
-			service.changePassword(userDto);
+			service.changePassword(authRequest);
 			return Response.success("Password Changed Successfully");
 		}else {
 			return Response.error("User Doesn't Exists");

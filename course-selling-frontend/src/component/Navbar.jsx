@@ -6,6 +6,7 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
+import Link from '@mui/material/Link';
 
 export default function Navbar() {
   return (
@@ -22,7 +23,9 @@ export default function Navbar() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }} style={{textAlign :'center'}}>
-            Welcome to Atharva Classes
+            <Link href="/" target="_blank" rel="noopener noreferrer"  style={{color:"white"}}>
+              Welcome to Atharva Classes
+            </Link>
           </Typography>
           <Button color="inherit" href="/LogIn">Login</Button>
           <Button color="inherit" href="/SignUp">SignUp</Button>

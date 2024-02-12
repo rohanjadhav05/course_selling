@@ -7,6 +7,8 @@ import Signup from './component/Signup';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
 import { SignIn } from './component/SignIn';
+import ForgetPasswordComponent from './component/ForgetPasswordComponent';
+import AdminComponent from './component/AdminComponent';
 
 function App() {
   return (
@@ -17,6 +19,8 @@ function App() {
           <Route path='/' element={<Home />} />
           <Route path='/Signup' element={<Signup />} />
           <Route path='/LogIn' element={<SignIn />}/>
+          <Route path='/ForgetPassword' element={<ForgetPasswordComponent />}/>
+          <Route path='/Admin' element={<AdminComponent />}/>
         </Routes>
         <FooterComponent />
       </BrowserRouter>
