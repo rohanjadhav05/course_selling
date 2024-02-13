@@ -9,6 +9,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import { SignIn } from './component/SignIn';
 import ForgetPasswordComponent from './component/ForgetPasswordComponent';
 import AdminComponent from './component/AdminComponent';
+import AddCourseForm from './component/AddCourseForm';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path='/LogIn' element={<SignIn />}/>
           <Route path='/ForgetPassword' element={<ForgetPasswordComponent />}/>
           <Route path='/Admin' element={<AdminComponent />}/>
+          <Route path='/AddCourse' element={<AddCourseForm />}/>
         </Routes>
         <FooterComponent />
       </BrowserRouter>

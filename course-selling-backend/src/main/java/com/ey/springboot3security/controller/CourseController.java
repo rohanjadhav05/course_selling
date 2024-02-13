@@ -1,8 +1,5 @@
 package com.ey.springboot3security.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -17,9 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ey.springboot3security.dto.CourseDto;
 import com.ey.springboot3security.dto.Response;
-import com.ey.springboot3security.entity.Courses;
 import com.ey.springboot3security.mapper.ModleMapper;
-import com.ey.springboot3security.repository.CourseRepository;
 import com.ey.springboot3security.service.CourseService;
 import com.ey.springboot3security.service.CourseServiceImpl;
 

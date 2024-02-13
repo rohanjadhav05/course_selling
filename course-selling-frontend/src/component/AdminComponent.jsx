@@ -82,11 +82,15 @@ const AdminComponent = () => {
         console.error(err);
       })
     }
+
+    function addCourse(){
+      navigator("/AddCourse")
+    }
   return (
     <div >
-      <Button variant="text" startIcon={<AddIcon sx={{ fontSize: 10 }} />}  style={{margin:'10px' }} onClick={() => publishCourse(c)}>
+      <Button variant="text" startIcon={<AddIcon sx={{ fontSize: 10 }} />}  style={{margin:'10px' }} onClick={() => addCourse()}>
           Add Course
-                  </Button>
+      </Button>
       <TableContainer component={Paper} style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
         <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
           <TableHead>
@@ -95,7 +99,7 @@ const AdminComponent = () => {
               <TableCell>Description</TableCell>
               <TableCell align="right">Price&nbsp;</TableCell>
               <TableCell align="right">Published&nbsp;</TableCell>
-              <TableCell align="right">Publishe Course</TableCell>
+              <TableCell align="right">Publish Course</TableCell>
               <TableCell align="center">Action</TableCell>
             </TableRow>
           </TableHead>
