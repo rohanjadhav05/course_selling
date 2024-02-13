@@ -28,7 +28,6 @@ export default function Navbar() {
     localStorage.removeItem("loginStatus");
     localStorage.removeItem("jwt");
     localStorage.removeItem("id");
-    location.reload();
     navigator("/");
   }
 

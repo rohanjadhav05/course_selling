@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -30,10 +31,7 @@ public class CourseController {
 	private CourseService courseService;
 	
 	@Autowired
-	private CourseServiceImpl courseServiceImpl;
-	
-	@Autowired
-	private CourseRepository courseRepository;
+	private CourseServiceImpl courseServiceImpl; 
 	
 	@PostMapping("/addCourse")
 	public ResponseEntity<?> createNewCourse(@RequestBody CourseDto courseDto){
@@ -51,4 +49,8 @@ public class CourseController {
 		return Response.success(courseServiceImpl.getAllCourses());
 	}
 	
+	@PutMapping("/publishCourse/{id}")
+	public ResponseEntity<?> publisheCourse(@PathVariable("id") Integer courseId){
+		return Response.success(""+courseService.publishCourse(courseId));
+	}
 }

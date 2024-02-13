@@ -61,4 +61,12 @@ public class CourseServiceImpl implements CourseService {
 		return listOfCourseDto;
 	}
 
+	@Override
+	public String publishCourse(Integer id) {
+		Courses course = courseRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Course With Id not Found"));
+		course.setPublished(true);
+		courseRepository.save(course);
+		return "Course is Published with id : "+course.getCourseId();
+	}
+
 }
