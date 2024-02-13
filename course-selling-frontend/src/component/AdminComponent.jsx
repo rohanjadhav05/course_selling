@@ -7,7 +7,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import PublishIcon from '@mui/icons-material/Publish';
 import Button from '@mui/material/Button';
@@ -86,6 +86,12 @@ const AdminComponent = () => {
     function addCourse(){
       navigator("/AddCourse")
     }
+
+    function updateCourse(c){
+      const id = c.courseId;
+      console.log("--- id : "+id);
+      navigator(`/UpdateCourse/${id}`);
+    }
   return (
     <div >
       <Button variant="text" startIcon={<AddIcon sx={{ fontSize: 10 }} />}  style={{margin:'10px' }} onClick={() => addCourse()}>
@@ -119,7 +125,7 @@ const AdminComponent = () => {
                   </Button>
                 </TableCell>
                 <TableCell align="right">
-                  <Button variant="text" startIcon={<SecurityUpdateOutlinedIcon sx={{ fontSize: 10 }} />}  style={{margin:'10px' }} onClick={() => publishCourse(c)}>
+                  <Button variant="text" startIcon={<SecurityUpdateOutlinedIcon sx={{ fontSize: 10 }} />}  style={{margin:'10px' }} onClick={() => updateCourse(c)}>
                         Update
                   </Button>
                   <Button variant="text" startIcon={<DeleteOutlineOutlinedIcon sx={{ fontSize: 10 }} />}  style={{margin:'10px' }} onClick={() => deleteCourse(c)}>

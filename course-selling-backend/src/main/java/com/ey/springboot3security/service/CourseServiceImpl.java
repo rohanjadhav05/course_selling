@@ -30,7 +30,7 @@ public class CourseServiceImpl implements CourseService {
 	}
 
 	@Override
-	public Map<String, Object> updateCourse(int courseId, CourseDto courseDto) {
+	public CourseDto updateCourse(int courseId, CourseDto courseDto) {
 		System.out.println();
 		System.out.println("Course Dto : "+courseDto.toString());
 		Courses fetchedCourse = courseRepository.findById(courseId)
@@ -39,7 +39,7 @@ public class CourseServiceImpl implements CourseService {
 		fetchedCourse.setCourseDesc(courseDto.getCourseDesc());
 		fetchedCourse.setCoursePrice(courseDto.getCoursePrice());
 		fetchedCourse.setPublished(courseDto.isPublished());
-		return Collections.singletonMap("CourseSaved", courseRepository.save(fetchedCourse));
+		return ModleMapper.mapToCourseDto(courseRepository.save(fetchedCourse));
 	}
 	
 	
@@ -74,6 +74,12 @@ public class CourseServiceImpl implements CourseService {
 		Courses course = courseRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Course With Id not Found"));
 		courseRepository.delete(course);
 		return "Course Delete with Id : "+course.getCourseId();
+	}
+
+	@Override
+	public CourseDto getCourse(Integer id) {
+		Courses course = courseRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Course with Id not Found"));
+		return ModleMapper.mapToCourseDto(course);
 	}
 
 }

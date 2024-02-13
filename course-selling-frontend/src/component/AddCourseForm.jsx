@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -11,7 +11,7 @@ import { toast } from 'react-toastify'
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import AddCircleSharpIcon from '@mui/icons-material/AddCircleSharp';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 
 const useStyles = makeStyles(theme => ({
@@ -44,18 +44,41 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const AddCourseForm = () => {
+    const {id} = useParams();
+    const [courseId, setCourseId] = useState();
     const [courseName, setCourseName] = useState();
     const [courseDesc, setCourseDesc] = useState();
     const [coursePrice, setCoursePrice] = useState(0);
+    const [isEditMode, setEditMode] = useState();
     const [published, setPublished] = useState(false);
     const classes = useStyles();
     const navigator = useNavigate();
     const REST_API_BASE_URL_ADMIN = "http://localhost:8080/admin";
     const headers = { headers: { Authorization: `Bearer ${localStorage['jwt']}` } }
 
-    function saveUser(e){
+    useEffect(() => {
+        if(id){
+            axios.get(REST_API_BASE_URL_ADMIN+"/getCourse/"+id, headers)
+            .then((response) => {
+                const result = response.data;
+                if(result['status'] == 'success'){
+                    setCourseId(result.data.courseId);
+                    setCourseName(result.data.courseName);
+                    setCourseDesc(result.data.courseDesc);
+                    setCoursePrice(result.data.coursePrice);
+                    setPublished(result.data.published);
+                    setEditMode(true);
+                }
+            }).catch(err => {
+                console.log(err);
+            })
+        }
+    }, [id]);
+
+
+    function saveOrUpdate(e){
         e.preventDefault();
-        const CourseDto = {courseName, courseDesc, coursePrice, published};
+        const CourseDto = {courseId,courseName, courseDesc, coursePrice, published};
         if(courseName.length == 0){
             toast.warning("Enter Course Name");
         }else if(courseDesc.length == 0){
@@ -63,20 +86,36 @@ const AddCourseForm = () => {
         }else if(coursePrice == 0){
             toast.warning("Enter Price");
         }else{
-            axios
-            .post(REST_API_BASE_URL_ADMIN+"/addCourse", CourseDto, headers)
-            .then((response) => {
-                const result = response.data;
-                if(result['status'] == 'success'){
-                    toast.success("course Add Successfully");
-                    navigator("/Admin");
-                }
-                else{
-                    toast.error("Falied");
-                }
-            }).catch(err => {
-                toast.error("Need to Login First");
-            })
+            if(id){
+                console.log(" inside the if(id) : ");
+                axios
+                .put(REST_API_BASE_URL_ADMIN+"/updateCourse", CourseDto, headers)
+                .then((response) => {
+                    const result = response.data;
+                    if(result['status'] == 'success'){
+                        toast.success("Updated Successfully");
+                        navigator("/Admin");
+                    }
+                    else{
+                        toast.error("Falied");
+                    }
+                })
+            }else{
+                axios
+                .post(REST_API_BASE_URL_ADMIN+"/addCourse", CourseDto, headers)
+                .then((response) => {
+                    const result = response.data;
+                    if(result['status'] == 'success'){
+                        toast.success("Added Successfully");
+                        navigator("/Admin");
+                    }
+                    else{
+                        toast.error("Falied");
+                    }
+                }).catch(err => {
+                    toast.error("Need to Login First");
+                })
+            }
         }
         
     }
@@ -94,7 +133,12 @@ const AddCourseForm = () => {
             <AddCircleSharpIcon color='inherit' />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Add Course
+            {
+                isEditMode && "Update Course"
+            }
+            {
+                !isEditMode && "Add Course"
+            }
           </Typography>
           <form className={classes.form} noValidate>
             <Grid container spacing={2} justify="center" alignItems="center">
@@ -102,9 +146,10 @@ const AddCourseForm = () => {
                 <TextField
                   autoComplete="fname"
                   name="name"
-                  variant="outlined"
+                  variant="filled"
                   required
                   fullWidth
+                  type='text'
                   id="courseName"
                   value={courseName}
                   label="Course Name"
@@ -116,13 +161,14 @@ const AddCourseForm = () => {
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  variant="outlined"
+                  variant="filled"
                   required
                   fullWidth
                   id="courseDesc"
                   label="Description"
                   name="courseDesc"
                   autoComplete="desc"
+                  type='text'
                   value={courseDesc}
                   onChange={(e) => {
                     setCourseDesc(e.target.value)
@@ -131,7 +177,7 @@ const AddCourseForm = () => {
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  variant="outlined"
+                  variant="filled"
                   required
                   fullWidth
                   name="coursePrice"
@@ -160,14 +206,14 @@ const AddCourseForm = () => {
                 </Grid>
             </Grid>
             <Button
-           ///   type="submit"
+              type="submit"
               fullWidth
               variant="contained"
               color="primary"
               className={classes.submit}
-              onClick={saveUser}
+              onClick={saveOrUpdate}
             >
-              Add
+              {isEditMode ? 'Update' : 'Add'}
             </Button>
           </form>
         </div>

@@ -23,6 +23,7 @@ function App() {
           <Route path='/ForgetPassword' element={<ForgetPasswordComponent />}/>
           <Route path='/Admin' element={<AdminComponent />}/>
           <Route path='/AddCourse' element={<AddCourseForm />}/>
+          <Route path='/UpdateCourse/:id' element={<AddCourseForm />}/>
         </Routes>
         <FooterComponent />
       </BrowserRouter>
