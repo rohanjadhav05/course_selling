@@ -11,5 +11,7 @@ public interface CourseService {
 	
 	String publishCourse(Integer id);
 	
+	String deleteCourse(Integer id);
+	
 }
 	

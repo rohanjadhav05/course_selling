@@ -12,22 +12,21 @@ import { toast } from 'react-toastify';
 import PublishIcon from '@mui/icons-material/Publish';
 import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
+import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
+import SecurityUpdateOutlinedIcon from '@mui/icons-material/SecurityUpdateOutlined';
 
 const AdminComponent = () => {
     const [courses, setCourses] = React.useState([]);
     const navigator = useNavigate();
+    const REST_API_BASE_URL_ADMIN = "http://localhost:8080/admin";
+    const headers = { headers: { Authorization: `Bearer ${localStorage['jwt']}` } }
     
     React.useEffect( () => {
         getAllCourses();
     }, []);
 
     function getAllCourses(){
-        const url = "http://localhost:8080/admin/getAllCourse";
-        console.log("jwt : "+localStorage['jwt']);
-        
-        axios.get(url, {
-            headers: { Authorization: `Bearer ${localStorage['jwt']}` },
-        })
+        axios.get(REST_API_BASE_URL_ADMIN+"/getAllCourse", headers )
         .then((response) => {
             const result = response.data;
             if(result['status'] == 'success'){
@@ -47,12 +46,9 @@ const AdminComponent = () => {
       const id = c.courseId;
       console.log("isPublished inside method : "+isPublished);
       if(!isPublished){
-        const url = 'http://localhost:8080/admin/publishCourse/'+id;
         console.log("jwt : "+localStorage['jwt']);
 
-        axios.put(url, null, {
-            headers: { Authorization : `Bearer ${localStorage['jwt']}` }
-        })
+        axios.put(REST_API_BASE_URL_ADMIN+"/publishCourse/"+id, null, headers )
         .then((response) => {
           const result = response.data;
           if(result['status'] == 'success'){
@@ -70,10 +66,26 @@ const AdminComponent = () => {
       }
     }
 
+    function deleteCourse(c){
+      const id = c.courseId;
+      axios.delete(REST_API_BASE_URL_ADMIN+"/deleteCourse/"+id,headers)
+      .then((response) => {
+        const result = response.data;
+          if(result['status'] == 'success'){
+            toast.success("Course Deleted successfully");
+            getAllCourses();
+          }
+          else{
+            toast.warning("failed");
+          }
+      }).catch(err => {
+        console.error(err);
+      })
+    }
   return (
     <div >
-      <Button variant="text" startIcon={<PublishIcon sx={{ fontSize: 10 }} />}  style={{margin:'10px' }} onClick={() => publishCourse(c)}>
-                        Publish
+      <Button variant="text" startIcon={<AddIcon sx={{ fontSize: 10 }} />}  style={{margin:'10px' }} onClick={() => publishCourse(c)}>
+          Add Course
                   </Button>
       <TableContainer component={Paper} style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
         <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
@@ -95,7 +107,7 @@ const AdminComponent = () => {
               >
                 <TableCell align="left">{c.courseName}</TableCell>
                 <TableCell component="th" scope="row">{c.courseDesc}</TableCell>
-                <TableCell align="right">{c.coursePrice}</TableCell>
+                <TableCell align="right">{c.coursePrice} INR</TableCell>
                 <TableCell align="right">{c.published ? 'Published' : 'Not Published'}</TableCell>
                 <TableCell align="right">
                   <Button variant="text" startIcon={<PublishIcon sx={{ fontSize: 10 }} />}  style={{margin:'10px' }} onClick={() => publishCourse(c)}>
@@ -103,10 +115,10 @@ const AdminComponent = () => {
                   </Button>
                 </TableCell>
                 <TableCell align="right">
-                  <Button variant="text" startIcon={<PublishIcon sx={{ fontSize: 10 }} />}  style={{margin:'10px' }} onClick={() => publishCourse(c)}>
+                  <Button variant="text" startIcon={<SecurityUpdateOutlinedIcon sx={{ fontSize: 10 }} />}  style={{margin:'10px' }} onClick={() => publishCourse(c)}>
                         Update
                   </Button>
-                  <Button variant="text" startIcon={<PublishIcon sx={{ fontSize: 10 }} />}  style={{margin:'10px' }} onClick={() => publishCourse(c)}>
+                  <Button variant="text" startIcon={<DeleteOutlineOutlinedIcon sx={{ fontSize: 10 }} />}  style={{margin:'10px' }} onClick={() => deleteCourse(c)}>
                         Delete
                   </Button>
                 </TableCell>

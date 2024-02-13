@@ -69,4 +69,11 @@ public class CourseServiceImpl implements CourseService {
 		return "Course is Published with id : "+course.getCourseId();
 	}
 
+	@Override
+	public String deleteCourse(Integer id) {
+		Courses course = courseRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Course With Id not Found"));
+		courseRepository.delete(course);
+		return "Course Delete with Id : "+course.getCourseId();
+	}
+
 }
