@@ -136,10 +136,7 @@ const AddCourseForm = () => {
           </Avatar>
           <Typography component="h1" variant="h5">
             {
-                isEditMode && "Update Course"
-            }
-            {
-                !isEditMode && "Add Course"
+                isEditMode ? "Update Course" : "Add Course"
             }
           </Typography>
           <form className={classes.form} noValidate>
@@ -148,7 +145,7 @@ const AddCourseForm = () => {
                 <TextField
                   autoComplete="fname"
                   name="name"
-                  variant="filled"
+                  variant="outlined"
                   required
                   fullWidth
                   type='text'
@@ -163,7 +160,7 @@ const AddCourseForm = () => {
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  variant="filled"
+                  variant="outlined"
                   required
                   fullWidth
                   id="courseDesc"
@@ -179,7 +176,7 @@ const AddCourseForm = () => {
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  variant="filled"
+                  variant="outlined"
                   required
                   fullWidth
                   id="coursePrice"
@@ -204,6 +201,7 @@ const AddCourseForm = () => {
                             />
                     }
                     label="Check if you want to publish"
+                    color='secondary'
                     />
                 </Grid>
             </Grid>
@@ -215,7 +213,7 @@ const AddCourseForm = () => {
               className={classes.submit}
               onClick={saveOrUpdate}
             >
-              {isEditMode ? 'Update' : 'Add'}
+              { isEditMode ? 'Update' : 'Add'}
             </Button>
           </form>
         </div>

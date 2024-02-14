@@ -83,17 +83,18 @@ const Signup = () => {
   const classes = useStyles();
   
   return (
+    <div id = 'signup' style={{ display: '-webkit-box'}}>
       <Container component="main" maxWidth="xs" >
         <CssBaseline />
         <div className={classes.paper}>
           <Avatar className={classes.avatar}>
             <LockOutlinedIcon />
           </Avatar>
-          <Typography component="h1" variant="h5">
+          <Typography component="h1" variant="h5" >
             Sign up
           </Typography>
           <form className={classes.form} noValidate>
-            <Grid container spacing={2} justify="center" alignItems="center">
+            <Grid container spacing={2}>
               <Grid item xs={12} sm={12}>
                 <TextField
                   autoComplete="fname"
@@ -179,6 +180,7 @@ const Signup = () => {
           </form>
         </div>
       </Container>
+      </div>
   );
 };
 

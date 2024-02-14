@@ -16,16 +16,6 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
-    root: {
-      height: "100vh"
-    },
-    image: {
-      backgroundImage: "url(https://source.unsplash.com/random)",
-      backgroundRepeat: "no-repeat",
-      backgroundSize: "cover",
-      backgroundPosition: "center"
-
-    },
     paper: {
       margin: theme.spacing(8, 4),
       display: "content",
@@ -87,7 +77,8 @@ const ForgetPasswordComponent = () => {
     }
 
   return (
-    <Grid container component="main" className={classes.root}>
+    <div id='changePassword' style={{ display: '-webkit-box'}}>
+    <Grid container component="main" maxWidth="xs">
       <CssBaseline />
       <Grid item xs={false} sm={4} md={7}/>
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
@@ -171,6 +162,7 @@ const ForgetPasswordComponent = () => {
         </div>
       </Grid>
     </Grid>
+    </div>
   )
 }
 

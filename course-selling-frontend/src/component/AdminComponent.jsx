@@ -98,7 +98,7 @@ const AdminComponent = () => {
       navigator(`/UpdateCourse/${id}`);
     }
   return (
-    <div id ="admin">
+    <div id ="admin" style={{padding : '5%'}}>
       <h2 style={{textAlign:'center'}}>Admin Portal - All courses</h2>
       <div style={{width : '100%', display:'flex', justifyContent:'flex-end'}}> 
       <Button variant="text" startIcon={<AddIcon sx={{ fontSize: 10 }} />}  style={{margin:'10px', }} onClick={() => addCourse()}>
@@ -109,12 +109,12 @@ const AdminComponent = () => {
         <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
           <TableHead>
             <TableRow>
-            <TableCell align="left">Name</TableCell>
-              <TableCell>Description</TableCell>
-              <TableCell align="right">Price&nbsp;</TableCell>
-              <TableCell align="right">Published&nbsp;</TableCell>
-              <TableCell align="right">Publish Course</TableCell>
-              <TableCell align="center">Action</TableCell>
+            <TableCell  align="left" style={{ fontWeight: 'bold' }}>Name</TableCell>
+              <TableCell style={{ fontWeight: 'bold' }} >Description</TableCell>
+              <TableCell align="right" style={{ fontWeight: 'bold' }}>Price&nbsp;</TableCell>
+              <TableCell align="right" style={{ fontWeight: 'bold' }}>Published&nbsp;</TableCell>
+              <TableCell align="right" style={{ fontWeight: 'bold' }}>Publish Course</TableCell>
+              <TableCell align="center" style={{ fontWeight: 'bold' }}>Action</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

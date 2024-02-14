@@ -17,16 +17,11 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
-    root: {
-      height: "100vh"
-    },
-    image: {
-      backgroundImage: "url(https://source.unsplash.com/random)",
-      backgroundRepeat: "no-repeat",
-      backgroundSize: "cover",
-      backgroundPosition: "center"
-
-    },
+  "@global": {
+    body: {
+      backgroundColor: theme.palette.common.white
+    }
+  },
     paper: {
       margin: theme.spacing(8, 4),
       display: "content",
@@ -89,7 +84,8 @@ export const SignIn = () => {
   }
 
   return (
-    <Grid container component="main" className={classes.root} alignItems="center" justifyContent="center">
+    <div id = 'signin' style={{ display: '-webkit-box'}}>
+    <Grid container component="main" maxWidth="xs" >
       <CssBaseline />
       <Grid item xs={false} sm={7} md={4}/>
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
@@ -97,9 +93,9 @@ export const SignIn = () => {
           <Avatar className={classes.avatar}>
             <LockOutlinedIcon />
           </Avatar>
-          <Typography component="h1" variant="h5">
-            Sign in
-          </Typography>
+            <Typography component="h1" variant="h5" style={{alignItems : 'center'}}>
+              Sign in
+            </Typography>
           <form className={classes.form} noValidate>
             <TextField
               variant="outlined"
@@ -159,5 +155,6 @@ export const SignIn = () => {
         </div>
       </Grid>
     </Grid>
+    </div>
   );
 }

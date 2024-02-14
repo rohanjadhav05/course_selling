@@ -15,6 +15,7 @@ import UserComponent from './component/UserComponent';
 function App() {
   return (
     <>
+    <div style={{ width: '100%' }}>
       <BrowserRouter>
         <Navbar />
         <Routes>
@@ -30,6 +31,7 @@ function App() {
         <FooterComponent />
       </BrowserRouter>
       <ToastContainer position='top-right' theme='colored' />
+      </div>
     </>
   );
 }

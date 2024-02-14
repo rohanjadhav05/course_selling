@@ -41,38 +41,40 @@ const UserComponent = () => {
         navigator(`/UpdateCourse/${id}`);
     }
   return (
-    <div >
-    <h2 style={{textAlign:'center'}}>User Portal - View Courses</h2>
-    <Button variant="text" startIcon={<InventoryOutlinedIcon sx={{ fontSize: 10 }} />}  style={{margin:'10px' }} onClick={() => addCourse()}>
-          View Purchased Course
-      </Button>
-    <TableContainer component={Paper} style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
-        <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
-          <TableHead>
-            <TableRow>
-            <TableCell align="left">Name</TableCell>
-              <TableCell>Description</TableCell>
-              <TableCell align="right">Price&nbsp;</TableCell>
-              <TableCell align="right">Purchase Course</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {courses.map((c) => (
-              <TableRow
-                key={c.courseId}
-                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-              >
-                <TableCell align="left">{c.courseName}</TableCell>
-                <TableCell component="th" scope="row">{c.courseDesc}</TableCell>
-                <TableCell align="right">{c.coursePrice} INR</TableCell>
-                <TableCell align="right">
-                    <Button variant="text" startIcon={<ShoppingCartIcon sx={{ fontSize: 10 }} />}  style={{margin:'10px' }} onClick={() => purchaseCourse(c)}>
-                        Purchase
-                    </Button>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
+    <div id = "user" style={{padding : '5%'}}>
+        <h2 style={{textAlign:'center'}}>User Portal - View Courses</h2>
+        <div style={{width : '100%', display:'flex', justifyContent:'flex-end'}}> 
+            <Button variant="text" startIcon={<InventoryOutlinedIcon sx={{ fontSize: 10 }} />}  style={{margin:'10px' }} onClick={() => addCourse()}>
+                View Purchased Course
+            </Button>
+        </div>
+        <TableContainer component={Paper} style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
+            <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
+            <TableHead>
+                <TableRow>
+                <TableCell align="left" style={{ fontWeight: 'bold' }}>Name</TableCell>
+                <TableCell align="center" style={{ fontWeight: 'bold' }}>Description</TableCell>
+                <TableCell align="right" style={{ fontWeight: 'bold' }}>Price&nbsp;</TableCell>
+                <TableCell align="right" style={{ fontWeight: 'bold' }}>Purchase Course</TableCell>
+                </TableRow>
+            </TableHead>
+            <TableBody>
+                {courses.map((c) => (
+                <TableRow
+                    key={c.courseId}
+                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                >
+                    <TableCell align="left">{c.courseName}</TableCell>
+                    <TableCell align="center" component="th" scope="row">{c.courseDesc}</TableCell>
+                    <TableCell align="right">{c.coursePrice} INR</TableCell>
+                    <TableCell align="right">
+                        <Button variant="text" startIcon={<ShoppingCartIcon sx={{ fontSize: 10 }} />}  style={{margin:'10px' }} onClick={() => purchaseCourse(c)}>
+                            Purchase
+                        </Button>
+                    </TableCell>
+                </TableRow>
+                ))}
+            </TableBody>
         </Table>
       </TableContainer>
     </div>
