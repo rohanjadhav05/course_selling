@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios'
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -7,7 +7,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import PublishIcon from '@mui/icons-material/Publish';
 import Button from '@mui/material/Button';
@@ -16,14 +16,19 @@ import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined
 import SecurityUpdateOutlinedIcon from '@mui/icons-material/SecurityUpdateOutlined';
 
 const AdminComponent = () => {
-    const [courses, setCourses] = React.useState([]);
+    const [courses, setCourses] = useState([]);
     const navigator = useNavigate();
     const REST_API_BASE_URL_ADMIN = "http://localhost:8080/admin";
     const headers = { headers: { Authorization: `Bearer ${localStorage['jwt']}` } }
     
-    React.useEffect( () => {
+    useEffect( () => {
+        console.log("UseEffect [] ")
         getAllCourses();
     }, []);
+
+    useEffect(() => {
+      console.log("useEffect [courses] : ");
+    }, [courses]);
 
     function getAllCourses(){
         axios.get(REST_API_BASE_URL_ADMIN+"/getAllCourse", headers )
@@ -93,10 +98,13 @@ const AdminComponent = () => {
       navigator(`/UpdateCourse/${id}`);
     }
   return (
-    <div >
-      <Button variant="text" startIcon={<AddIcon sx={{ fontSize: 10 }} />}  style={{margin:'10px' }} onClick={() => addCourse()}>
+    <div id ="admin">
+      <h2 style={{textAlign:'center'}}>Admin Portal - All courses</h2>
+      <div style={{width : '100%', display:'flex', justifyContent:'flex-end'}}> 
+      <Button variant="text" startIcon={<AddIcon sx={{ fontSize: 10 }} />}  style={{margin:'10px', }} onClick={() => addCourse()}>
           Add Course
       </Button>
+      </div>
       <TableContainer component={Paper} style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
         <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
           <TableHead>

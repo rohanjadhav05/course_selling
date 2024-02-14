@@ -16,42 +16,54 @@ export default function Navbar() {
   const navigator = useNavigate();
 
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
-  console.log("loginStatus :  "+localStorage['loginStatus']);
+
+  console.log("loginStatus :  " + localStorage['loginStatus']);
+  
+  // React.useEffect(() => {
+  //   console.log("inside useEffect");
+  //   if (localStorage['loginStatus'] == 1) {
+  //     setIsLoggedIn(true);
+  //   }
+  // });
+
+  
   React.useEffect(() => {
-    console.log("inside useEffect");
-    if(localStorage['loginStatus'] == 1){
+    console.log("is Logged in : "+isLoggedIn);
+    if (localStorage['loginStatus'] === '1') {
       setIsLoggedIn(true);
     }
-  });
+  }, [localStorage.loginStatus]);
 
-  function logOutUser(){
+  function logOutUser() {
     localStorage.removeItem("loginStatus");
     localStorage.removeItem("jwt");
     localStorage.removeItem("id");
+    setIsLoggedIn(false);
     navigator("/");
   }
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" style={{position : 'fixed', top : 0}}>
-        <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            sx={{ mr: 2 }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }} style={{textAlign :'center'}}>
-            <Link href="/" target="_blank" rel="noopener noreferrer"  style={{color:"white"}}>
-              Welcome to Atharva Classes
-            </Link>
-          </Typography>
-          {
-            isLoggedIn &&
-            <AccountCircleIcon fontSize='medium' href="/profile"/>
+    <div id="header">
+      <Box sx={{ flexGrow: 1 }}>
+        <AppBar position="static" style={{ position: 'fixed', top: 0 }}>
+          <Toolbar>
+            <IconButton
+              size="large"
+              edge="start"
+              color="inherit"
+              aria-label="menu"
+              sx={{ mr: 2 }}
+            >
+              <MenuIcon />
+            </IconButton>
+            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }} style={{ textAlign: 'center' }}>
+              <Link href="/" target="_blank" rel="noopener noreferrer" style={{ color: "white" }}>
+                Welcome to Atharva Classes
+              </Link>
+            </Typography>
+            {
+              isLoggedIn &&
+                <AccountCircleIcon fontSize='medium' href="/profile"/>
           }
           {
             !isLoggedIn &&
@@ -59,15 +71,16 @@ export default function Navbar() {
           }
           {
             !isLoggedIn &&
-            <Button color="inherit" href="/SignUp">SignUp</Button>
-          }
+                  <Button color="inherit" href="/SignUp">SignUp</Button>
+              }
           {
             isLoggedIn && 
             <Button color="warning" onClick={logOutUser}>LogOut</Button>
-          }
-          
-        </Toolbar>
-      </AppBar>
-    </Box>
+            }
+
+          </Toolbar>
+        </AppBar>
+      </Box>
+    </div>
   );
 }

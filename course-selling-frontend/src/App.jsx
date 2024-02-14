@@ -10,6 +10,7 @@ import { SignIn } from './component/SignIn';
 import ForgetPasswordComponent from './component/ForgetPasswordComponent';
 import AdminComponent from './component/AdminComponent';
 import AddCourseForm from './component/AddCourseForm';
+import UserComponent from './component/UserComponent';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
           <Route path='/Admin' element={<AdminComponent />}/>
           <Route path='/AddCourse' element={<AddCourseForm />}/>
           <Route path='/UpdateCourse/:id' element={<AddCourseForm />}/>
+          <Route path='/User' element={<UserComponent />}/>
         </Routes>
         <FooterComponent />
       </BrowserRouter>

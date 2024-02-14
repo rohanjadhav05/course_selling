@@ -126,6 +126,8 @@ const AddCourseForm = () => {
     };
 
   return (
+    <div style={{justifyContent : 'center'}}>
+    <h2 style={{textAlign:'center'}}>Admin Portal</h2>
     <Container component="main" maxWidth="xs" >
         <CssBaseline />
         <div className={classes.paper}>
@@ -180,11 +182,11 @@ const AddCourseForm = () => {
                   variant="filled"
                   required
                   fullWidth
-                  name="coursePrice"
-                  label="Price"
-                  type="number"
                   id="coursePrice"
-                  autoComplete="current-password"
+                  label="Price"
+                  name="coursePrice"
+                  autoComplete="price"
+                  type="number"
                   value={coursePrice}
                   onChange={(e) => {
                     setCoursePrice(e.target.value)
@@ -218,6 +220,7 @@ const AddCourseForm = () => {
           </form>
         </div>
       </Container>
+      </div>
   )
 }
 
