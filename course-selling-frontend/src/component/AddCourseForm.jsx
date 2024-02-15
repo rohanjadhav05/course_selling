@@ -70,7 +70,9 @@ const AddCourseForm = () => {
                     setEditMode(true);
                 }
             }).catch(err => {
-                console.log(err);
+                if(response.status === 403){
+                  toast.error("Need to login First");
+                }
             })
         }
     }, [id]);
@@ -99,6 +101,11 @@ const AddCourseForm = () => {
                     else{
                         toast.error("Falied");
                     }
+                }).catch(err => {
+                  console.log(err);
+                  if(response.status === 403){
+                    toast.error("Need to login First");
+                  }
                 })
             }else{
                 axios
@@ -113,7 +120,10 @@ const AddCourseForm = () => {
                         toast.error("Falied");
                     }
                 }).catch(err => {
-                    toast.error("Need to Login First");
+                  console.log(err);
+                  if(response.status === 403){
+                    toast.error("Need to login First");
+                  }
                 })
             }
         }

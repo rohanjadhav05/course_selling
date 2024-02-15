@@ -32,13 +32,16 @@ const UserComponent = () => {
                 setCourses(result['data']);
             }
         }).catch(err => {
-            console.error(err);
+            if(response.status === 403){
+                toast.warning("need to login first");
+            }
         })
     }
 
     function purchaseCourse(c){
         const id = c.courseId;
-        navigator(`/UpdateCourse/${id}`);
+        console.log("-------- ID : "+id);
+        navigator(`/BuyCourse/${id}`);
     }
 
     function viewPurchasedCourse(){

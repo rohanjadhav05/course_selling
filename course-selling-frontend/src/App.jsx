@@ -12,6 +12,7 @@ import AdminComponent from './component/AdminComponent';
 import AddCourseForm from './component/AddCourseForm';
 import UserComponent from './component/UserComponent';
 import PurchasedCourse from './component/PurchasedCourse';
+import BuyCourse from './component/BuyCourse';
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
           <Route path='/UpdateCourse/:id' element={<AddCourseForm />}/>
           <Route path='/User' element={<UserComponent />}/>
           <Route path='/PurchasedCourse' element={<PurchasedCourse />}/>
+          <Route path='/BuyCourse/:id' element={<BuyCourse />}/>
         </Routes>
         <FooterComponent />
       </BrowserRouter>

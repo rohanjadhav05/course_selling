@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ey.springboot3security.dto.CourseUserDto;
 import com.ey.springboot3security.dto.Response;
+import com.ey.springboot3security.service.CourseService;
 import com.ey.springboot3security.service.CourseServiceImpl;
 import com.ey.springboot3security.service.CourseUserServiceImpl;
 
@@ -26,6 +27,9 @@ public class UserController {
 	@Autowired
 	private CourseUserServiceImpl courseUserServiceImpl;
 	
+	@Autowired 
+	private CourseService courseService;
+	
 	@GetMapping("/courses")
 	public ResponseEntity<?> PublishedCourses(){
 		return Response.success(courseServiceImpl.getPublishedCourse()) ;
@@ -39,5 +43,10 @@ public class UserController {
 	@GetMapping("/purchasedCourse/{userId}")
 	public ResponseEntity<?> PurchasedCourseByUser(@PathVariable("userId") Integer userId){
 		return Response.success(courseUserServiceImpl.getPurchasedCourse(userId));
+	}
+	
+	@GetMapping("/getCourse/{id}")
+	public ResponseEntity<?> getCourses(@PathVariable("id") Integer courseId){
+		return Response.success(courseService.getCourse(courseId));
 	}
 }
