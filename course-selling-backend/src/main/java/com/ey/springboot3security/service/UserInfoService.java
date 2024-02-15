@@ -1,6 +1,5 @@
 package com.ey.springboot3security.service;
 
-import com.ey.springboot3security.dto.UserDto;
 import com.ey.springboot3security.entity.AuthRequest;
 import com.ey.springboot3security.entity.UserInfo; 
 import com.ey.springboot3security.repository.UserInfoRepository; 

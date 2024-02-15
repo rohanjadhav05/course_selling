@@ -11,6 +11,7 @@ import ForgetPasswordComponent from './component/ForgetPasswordComponent';
 import AdminComponent from './component/AdminComponent';
 import AddCourseForm from './component/AddCourseForm';
 import UserComponent from './component/UserComponent';
+import PurchasedCourse from './component/PurchasedCourse';
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
           <Route path='/AddCourse' element={<AddCourseForm />}/>
           <Route path='/UpdateCourse/:id' element={<AddCourseForm />}/>
           <Route path='/User' element={<UserComponent />}/>
+          <Route path='/PurchasedCourse' element={<PurchasedCourse />}/>
         </Routes>
         <FooterComponent />
       </BrowserRouter>
