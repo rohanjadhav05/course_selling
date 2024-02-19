@@ -17,6 +17,7 @@ import Select from '@mui/material/Select';
 import { toast } from 'react-toastify' 
 import { createUser } from '../service/service';
 import { useNavigate } from 'react-router-dom';
+import { Card } from '@material-ui/core';
 
 
 const useStyles = makeStyles(theme => ({
@@ -83,7 +84,8 @@ const Signup = () => {
   const classes = useStyles();
   
   return (
-    <div id = 'signup' style={{ display: '-webkit-box'}}>
+    <div id = 'signup' style={{ display: 'flex', justifyContent : 'center'}}>
+    <Card style={{display :'flex', justifyContent:'center'}}>
       <Container component="main" maxWidth="xs" >
         <CssBaseline />
         <div className={classes.paper}>
@@ -179,7 +181,9 @@ const Signup = () => {
             </Grid>
           </form>
         </div>
+        
       </Container>
+      </Card>
       </div>
   );
 };

@@ -97,6 +97,8 @@ export const SignIn = () => {
               Sign in
             </Typography>
           <form className={classes.form} noValidate>
+          <Grid container spacing={2}>
+          <Grid item xs={12} sm={12}>
             <TextField
               variant="outlined"
               margin="normal"
@@ -111,6 +113,8 @@ export const SignIn = () => {
                 SetUsername(e.target.value)
               }}
             />
+            </Grid>
+            <Grid item xs={12} sm={12}>
             <TextField
               variant="outlined"
               margin="normal"
@@ -125,10 +129,13 @@ export const SignIn = () => {
                 SetPassword(e.target.value)
               }}
             />
+            </Grid>
+            <Grid item xs={12} sm={12}>
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
             />
+            </Grid>
             <Button
               type="submit"
               fullWidth
@@ -151,6 +158,7 @@ export const SignIn = () => {
                 </Link>
               </Grid>
             </Grid>
+          </Grid>
           </form>
         </div>
       </Grid>
