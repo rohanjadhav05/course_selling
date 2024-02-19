@@ -44,9 +44,9 @@ const BuyCourse = () => {
   const {id} = useParams();
   const mappedUserId = localStorage['id'];
   const mappedCourseId = id;
-  const [courseId, setCourseId] = useState();
-  const [courseName, setCourseName] = useState();
-  const [courseDesc, setCourseDesc] = useState();
+  const [courseId, setCourseId] = useState('');
+  const [courseName, setCourseName] = useState('');
+  const [courseDesc, setCourseDesc] = useState('');
   const [coursePrice, setCoursePrice] = useState(0);
   const classes = useStyles();
   const navigator = useNavigate();
@@ -108,7 +108,7 @@ const BuyCourse = () => {
                 <TextField
                   autoComplete="fname"
                   name="name"
-                  variant="filled"
+                  variant="outlined"
                   required
                   fullWidth
                   type="text"
@@ -121,7 +121,7 @@ const BuyCourse = () => {
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  variant="filled"
+                  variant="outlined"
                   required
                   fullWidth
                   id="courseDesc"
@@ -135,7 +135,7 @@ const BuyCourse = () => {
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  variant="filled"
+                  variant="outlined"
                   required
                   fullWidth
                   id="coursePrice"

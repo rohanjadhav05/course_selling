@@ -31,13 +31,13 @@ public class CourseServiceImpl implements CourseService {
 
 	@Override
 	public CourseDto updateCourse(int courseId, CourseDto courseDto) {
-		System.out.println();
 		System.out.println("Course Dto : "+courseDto.toString());
 		Courses fetchedCourse = courseRepository.findById(courseId)
 									.orElseThrow(() -> new ResourceNotFoundException("Course with Id Dont't Exits"));
 		fetchedCourse.setCourseName(courseDto.getCourseName());
 		fetchedCourse.setCourseDesc(courseDto.getCourseDesc());
 		fetchedCourse.setCoursePrice(courseDto.getCoursePrice());
+		fetchedCourse.setCourseImage(courseDto.getCourseImage());
 		fetchedCourse.setPublished(courseDto.isPublished());
 		return ModleMapper.mapToCourseDto(courseRepository.save(fetchedCourse));
 	}

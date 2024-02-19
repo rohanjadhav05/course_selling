@@ -13,5 +13,6 @@ public class CourseDto {
 	private String courseName;
 	private String courseDesc;
 	private Integer coursePrice;
+	private String courseImage;
 	private boolean isPublished;
 }

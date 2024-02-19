@@ -12,6 +12,7 @@ import { toast } from 'react-toastify';
 import { Button } from '@mui/material';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import InventoryOutlinedIcon from '@mui/icons-material/InventoryOutlined';
+import { Card, Grid, Typography } from '@material-ui/core';
 
 const UserComponent = () => {
     
@@ -38,8 +39,8 @@ const UserComponent = () => {
         })
     }
 
-    function purchaseCourse(c){
-        const id = c.courseId;
+    function purchaseCourse(course){
+        const id = course.courseId;
         console.log("-------- ID : "+id);
         navigator(`/BuyCourse/${id}`);
     }
@@ -55,7 +56,36 @@ const UserComponent = () => {
                 View Purchased Course
             </Button>
         </div>
-        <TableContainer component={Paper} style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
+        <Grid item lg={6} md={12} sm={12}>
+            <div style={{display: "flex",  marginTop: 50, justifyContent: "center", flexWrap : 'wrap', width : '100vw'}}>
+                {
+                    courses.map((course) => (
+                        <Card 
+                        key={course.courseId} 
+                        style={{
+                            margin: 10,
+                            width: 350,
+                            minHeight: 100,
+                            borderRadius: 20,
+                            marginRight: 50,
+                            paddingBottom: 15
+                        }}>
+                            <img src={course.courseImage} style={{width: 350, height:250}} ></img>
+                            <div style={{marginLeft: 10}}>
+                                <Typography variant="h5">{course.courseName}</Typography>
+                                <Typography variant="h6">{course.courseDesc}</Typography>
+                                <Typography variant="subtitle2" style={{color: "gray"}}>
+                                    Price <b>Rs {course.coursePrice} </b>
+                                </Typography>
+                                <Button  variant="text" startIcon={<ShoppingCartIcon sx={{ fontSize: 10 }} />}  style={{margin:'10px' }} onClick={() => purchaseCourse(course)}>
+                                    Purchase
+                                </Button>
+                            </div>
+                        </Card>
+                ))}
+            </div> 
+        </Grid>
+        {/* <TableContainer component={Paper} style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
             <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
             <TableHead>
                 <TableRow>
@@ -83,7 +113,7 @@ const UserComponent = () => {
                 ))}
             </TableBody>
         </Table>
-      </TableContainer>
+      </TableContainer> */}
     </div>
   )
 }

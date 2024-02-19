@@ -40,6 +40,9 @@ public class Courses {
 	@Column(name = "course_isPublished")
 	private boolean isPublished;
 	
+	@Column(name = "course_image", length = 1024)
+	private String courseImage;
+	
 	@OneToMany(mappedBy = "mappedCourseId",cascade = CascadeType.ALL)
 	private List<CourseUser> courseUserList; 
 	

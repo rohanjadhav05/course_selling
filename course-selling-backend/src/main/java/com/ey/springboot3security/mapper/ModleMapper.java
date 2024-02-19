@@ -38,6 +38,7 @@ public class ModleMapper {
 		course.setCourseDesc(courseDto.getCourseDesc());
 		course.setCourseName(courseDto.getCourseName());
 		course.setCoursePrice(courseDto.getCoursePrice());
+		course.setCourseImage(courseDto.getCourseImage());
 		return course;
 	}
 	
@@ -47,6 +48,7 @@ public class ModleMapper {
 					course.getCourseName(),
 					course.getCourseDesc(),
 					course.getCoursePrice(),
+					course.getCourseImage(),
 					course.isPublished()
 		);
 	}

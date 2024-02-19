@@ -31,7 +31,7 @@ const useStyles = makeStyles(theme => ({
       backgroundColor: theme.palette.secondary.main
     },
     form: {
-      width: "100%", // Fix IE 11 issue.
+      width: "100vw", // Fix IE 11 issue.
       marginTop: theme.spacing(3)
     },
     submit: {
@@ -45,12 +45,13 @@ const useStyles = makeStyles(theme => ({
 
 const AddCourseForm = () => {
     const {id} = useParams();
-    const [courseId, setCourseId] = useState();
-    const [courseName, setCourseName] = useState();
-    const [courseDesc, setCourseDesc] = useState();
+    const [courseId, setCourseId] = useState(0);
+    const [courseName, setCourseName] = useState('');
+    const [courseDesc, setCourseDesc] = useState('');
     const [coursePrice, setCoursePrice] = useState(0);
     const [isEditMode, setEditMode] = useState();
     const [published, setPublished] = useState(false);
+    const [courseImage, setCourseImage] = useState('');
     const classes = useStyles();
     const navigator = useNavigate();
     const REST_API_BASE_URL_ADMIN = "http://localhost:8080/admin";
@@ -67,6 +68,7 @@ const AddCourseForm = () => {
                     setCourseDesc(result.data.courseDesc);
                     setCoursePrice(result.data.coursePrice);
                     setPublished(result.data.published);
+                    setCourseImage(result.data.courseImage);
                     setEditMode(true);
                 }
             }).catch(err => {
@@ -80,13 +82,16 @@ const AddCourseForm = () => {
 
     function saveOrUpdate(e){
         e.preventDefault();
-        const CourseDto = {courseId,courseName, courseDesc, coursePrice, published};
+        const CourseDto = {courseId,courseName, courseDesc, coursePrice, courseImage, published};
+        console.log(courseImage+" "+courseImage.length)
         if(courseName.length == 0){
             toast.warning("Enter Course Name");
         }else if(courseDesc.length == 0){
             toast.warning("Enter Description");
         }else if(coursePrice == 0){
             toast.warning("Enter Price");
+        }else if(courseImage.length > 1024 || courseImage.length == 0){
+            toast.warning("Length should not be greater than 1024")
         }else{
             if(id){
                 console.log(" inside the if(id) : ");
@@ -197,6 +202,22 @@ const AddCourseForm = () => {
                   value={coursePrice}
                   onChange={(e) => {
                     setCoursePrice(e.target.value)
+                  }}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="courseImage"
+                  label="Image Link"
+                  name="courseImage"
+                  autoComplete="link"
+                  type="text"
+                  value={courseImage}
+                  onChange={(e) => {
+                    setCourseImage(e.target.value)
                   }}
                 />
               </Grid>
