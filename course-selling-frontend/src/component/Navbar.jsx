@@ -30,7 +30,7 @@ export default function Navbar() {
   React.useEffect(() => {
     console.log("is Logged in : "+isLoggedIn);
     if (localStorage['loginStatus'] === '1') {
-      setIsLoggedIn(true);
+     // setIsLoggedIn(true);
     }
   }, [localStorage.loginStatus]);
 
