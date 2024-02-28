@@ -13,11 +13,19 @@ import AddCourseForm from './component/AddCourseForm';
 import UserComponent from './component/UserComponent';
 import PurchasedCourse from './component/PurchasedCourse';
 import BuyCourse from './component/BuyCourse';
+import {
+  RecoilRoot,
+  atom,
+  selector,
+  useRecoilState,
+  useRecoilValue,
+} from 'recoil';
 
 function App() {
   return (
     <>
     <div style={{ width: '100%' }}>
+    <RecoilRoot>
       <BrowserRouter>
         <Navbar />
         <Routes>
@@ -35,6 +43,7 @@ function App() {
         <FooterComponent />
       </BrowserRouter>
       <ToastContainer position='top-right' theme='colored' />
+      </RecoilRoot>
       </div>
     </>
   );
