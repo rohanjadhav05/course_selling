@@ -7,7 +7,7 @@ import Container from "@material-ui/core/Container";
 import { toast } from 'react-toastify'
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
-import { Button } from '@material-ui/core';
+import { Button, Paper } from '@material-ui/core';
 import PublishIcon from '@mui/icons-material/Publish';
 import LocalGroceryStoreRoundedIcon from '@mui/icons-material/LocalGroceryStoreRounded';
 
@@ -18,7 +18,7 @@ const useStyles = makeStyles(theme => ({
     }
   },
   paper: {
-    marginTop: theme.spacing(8),
+    margin: theme.spacing(8,4),
     display: "flex",
     flexDirection: "column",
     alignItems: "center"
@@ -97,10 +97,12 @@ const BuyCourse = () => {
     })
   }
   return (
-    <div id="buyCourse" style={{justifyContent : 'center'}}>
+    <div id="buyCourse" style={{ justifyContent : 'center'}}>
       <h2 style={{textAlign:'center'}}>User Portal - Purchase Course</h2>
-      <Container component="main" maxWidth="xs" >
+      <Grid container component="main" maxWidth="xs" >
         <CssBaseline />
+        <Grid item xs={false} sm={7} md={4}/>
+        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={10} square>
         <div className={classes.paper}>
           <form className={classes.form} noValidate>
             <Grid container spacing={2} justifyContent="center" alignItems="center">
@@ -119,7 +121,7 @@ const BuyCourse = () => {
                   disabled
                 />
               </Grid>
-              <Grid item xs={12}>
+              <Grid item xs={12} sm={12}>
                 <TextField
                   variant="outlined"
                   required
@@ -133,7 +135,7 @@ const BuyCourse = () => {
                   disabled
                 />
               </Grid>
-              <Grid item xs={12}>
+              <Grid item xs={12} sm={12}>
                 <TextField
                   variant="outlined"
                   required
@@ -147,7 +149,7 @@ const BuyCourse = () => {
                   disabled
                 />
               </Grid>
-              <Grid item xs={12} style={{alignItems : 'center'}}>
+              <Grid item xs={12} sm={12} style={{alignItems : 'center'}}>
                 <Button variant="contained" color='primary' startIcon={<LocalGroceryStoreRoundedIcon sx={{ fontSize: 10 }} />}  style={{margin:'10px' }} onClick={() => purchase()}>
                         Purchase Course
                 </Button>
@@ -155,7 +157,8 @@ const BuyCourse = () => {
             </Grid>
           </form>
           </div>
-      </Container>
+        </Grid>
+      </Grid>
     </div>
   )
 }

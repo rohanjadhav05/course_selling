@@ -24,7 +24,7 @@ const useStyles = makeStyles(theme => ({
   },
     paper: {
       margin: theme.spacing(8, 4),
-      display: "content",
+      display: "flex",
       flexDirection: "column",
       alignItems: "center"
     },
@@ -34,11 +34,15 @@ const useStyles = makeStyles(theme => ({
     },
     form: {
       width: "100%", // Fix IE 11 issue.
-      marginTop: theme.spacing(1)
+      marginTop: theme.spacing(3)
     },
     submit: {
       margin: theme.spacing(3, 0, 2)
-    }
+    },
+    container: {
+      display: "flex !important",
+      alignItems: "center !important",
+    },
 }));
 
 
@@ -84,11 +88,11 @@ export const SignIn = () => {
   }
 
   return (
-    <div id = 'signin' style={{ display: '-webkit-box'}}>
+    <div id = 'signin' style={{ display: 'flex', justifyContent : 'center'}}>
     <Grid container component="main" maxWidth="xs" >
       <CssBaseline />
       <Grid item xs={false} sm={7} md={4}/>
-      <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+      <Grid item xs={12} sm={8} md={5} component={Paper} elevation={10} square>
         <div className={classes.paper}>
           <Avatar className={classes.avatar}>
             <LockOutlinedIcon />
@@ -97,66 +101,66 @@ export const SignIn = () => {
               Sign in
             </Typography>
           <form className={classes.form} noValidate>
-          <Grid container spacing={2}>
-          <Grid item xs={12} sm={12}>
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="name"
-              label="Name"
-              name="username"
-              autoComplete="name"
-              autoFocus
-              onChange={(e) => {
-                SetUsername(e.target.value)
-              }}
-            />
+          <Grid container spacing={0}>
+            <Grid item xs={12} sm={12}>
+              <TextField
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                id="name"
+                label="Name"
+                name="username"
+                autoComplete="name"
+                autoFocus
+                onChange={(e) => {
+                  SetUsername(e.target.value)
+                }}
+              />
             </Grid>
             <Grid item xs={12} sm={12}>
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-              onChange={(e) => {
-                SetPassword(e.target.value)
-              }}
-            />
-            </Grid>
-            <Grid item xs={12} sm={12}>
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
-            </Grid>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.submit}
-              onClick={loginUser}
-            >
-              Sign In
-            </Button>
-            <Grid container>
-              <Grid item xs>
-                <Link href="/ForgetPassword" variant="body2">
-                  Forgot password?
-                </Link>
+              <TextField
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                name="password"
+                label="Password"
+                type="password"
+                id="password"
+                autoComplete="current-password"
+                onChange={(e) => {
+                  SetPassword(e.target.value)
+                }}
+              />
               </Grid>
-              <Grid item>
-                <Link href="/Signup" variant="body2">
-                  {"Don't have an account? Sign Up"}
-                </Link>
+              <Grid item xs={12} sm={12}>
+              <FormControlLabel
+                control={<Checkbox value="remember" color="primary" />}
+                label="Remember me"
+              />
               </Grid>
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="primary"
+                className={classes.submit}
+                onClick={loginUser}
+              >
+                Sign In
+              </Button>
+              <Grid container>
+                <Grid item xs>
+                  <Link href="/ForgetPassword" variant="body2">
+                    Forgot password?
+                  </Link>
+                </Grid>
+                <Grid item>
+                  <Link href="/Signup" variant="body2">
+                    {"Don't have an account? Sign Up"}
+                  </Link>
+                </Grid>
             </Grid>
           </Grid>
           </form>
@@ -166,3 +170,4 @@ export const SignIn = () => {
     </div>
   );
 }
+  

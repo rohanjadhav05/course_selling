@@ -17,7 +17,7 @@ import Select from '@mui/material/Select';
 import { toast } from 'react-toastify' 
 import { createUser } from '../service/service';
 import { useNavigate } from 'react-router-dom';
-import { Card } from '@material-ui/core';
+import { Card, Paper } from '@material-ui/core';
 
 
 const useStyles = makeStyles(theme => ({
@@ -27,7 +27,7 @@ const useStyles = makeStyles(theme => ({
     }
   },
   paper: {
-    marginTop: theme.spacing(8),
+    margin: theme.spacing(8, 4),
     display: "flex",
     flexDirection: "column",
     alignItems: "center"
@@ -85,14 +85,15 @@ const Signup = () => {
   
   return (
     <div id = 'signup' style={{ display: 'flex', justifyContent : 'center'}}>
-    <Card style={{display :'flex', justifyContent:'center'}}>
-      <Container component="main" maxWidth="xs" >
+    <Grid container component="main" maxWidth="xs" >
         <CssBaseline />
+        <Grid item xs={false} sm={7} md={4}/>
+        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={10} square>
         <div className={classes.paper}>
           <Avatar className={classes.avatar}>
             <LockOutlinedIcon />
           </Avatar>
-          <Typography component="h1" variant="h5" >
+          <Typography component="h1" variant="h5" style={{alignItems : 'center'}}>
             Sign up
           </Typography>
           <form className={classes.form} noValidate>
@@ -113,7 +114,7 @@ const Signup = () => {
                   autoFocus
                 />
               </Grid>
-              <Grid item xs={12}>
+              <Grid item xs={12} sm={12}>
                 <TextField
                   variant="outlined"
                   required
@@ -128,7 +129,7 @@ const Signup = () => {
                   }}
                 />
               </Grid>
-              <Grid item xs={12}>
+              <Grid item xs={12} sm={12}>
                 <TextField
                   variant="outlined"
                   required
@@ -144,7 +145,7 @@ const Signup = () => {
                   }}
                 />
               </Grid>
-              <Grid item xs={12}>
+              <Grid item xs={12} sm={12}>
                 <FormControl fullWidth>
                   <InputLabel id="demo-simple-select-label">Role</InputLabel>
                   <Select
@@ -161,7 +162,7 @@ const Signup = () => {
                   </Select>
                 </FormControl>
               </Grid>
-            </Grid>
+            
             <Button
               type="submit"
               fullWidth
@@ -179,11 +180,11 @@ const Signup = () => {
                 </Link>
               </Grid>
             </Grid>
+            </Grid>
           </form>
         </div>
-        
-      </Container>
-      </Card>
+        </Grid>
+      </Grid>
       </div>
   );
 };

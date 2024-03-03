@@ -13,6 +13,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import AddCircleSharpIcon from '@mui/icons-material/AddCircleSharp';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
+import { Paper } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
     "@global": {
@@ -21,7 +22,7 @@ const useStyles = makeStyles(theme => ({
       }
     },
     paper: {
-      marginTop: theme.spacing(8),
+      margin: theme.spacing(8, 4),
       display: "flex",
       flexDirection: "column",
       alignItems: "center"
@@ -143,8 +144,10 @@ const AddCourseForm = () => {
   return (
     <div style={{justifyContent : 'center'}}>
     <h2 style={{textAlign:'center'}}>Admin Portal</h2>
-    <Container component="main" maxWidth="xs" >
+    <Grid container component="main" maxWidth="xs" >
         <CssBaseline />
+        <Grid item xs={false} sm={7} md={4}/>
+        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={10} square>
         <div className={classes.paper}>
           <Avatar className={classes.avatar}>
             <AddCircleSharpIcon color='inherit' />
@@ -235,7 +238,6 @@ const AddCourseForm = () => {
                     color='secondary'
                     />
                 </Grid>
-            </Grid>
             <Button
               type="submit"
               fullWidth
@@ -246,9 +248,11 @@ const AddCourseForm = () => {
             >
               { isEditMode ? 'Update' : 'Add'}
             </Button>
+            </Grid>
           </form>
         </div>
-      </Container>
+        </Grid>
+      </Grid>
       </div>
   )
 }
