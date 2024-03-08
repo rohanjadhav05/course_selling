@@ -1,0 +1,82 @@
+import * as React from 'react';
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
+import MenuIcon from '@mui/icons-material/Menu';
+import Link from '@mui/material/Link';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+
+function Navbar() {
+  const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+  //console.log("loginStatus :  " + localStorage['loginStatus']);
+  
+  // React.useEffect(() => {
+  //   console.log("inside useEffect");
+  //   if (localStorage['loginStatus'] == 1) {
+  //     setIsLoggedIn(true);
+  //   }
+  // });
+
+  
+  // React.useEffect(() => {
+  //   console.log("is Logged in : "+isLoggedIn);
+  //   if (localStorage['loginStatus'] === '1') {
+  //     setIsLoggedIn(true);
+  //   }
+  // }, [localStorage.loginStatus]);
+
+  function logOutUser() {
+    localStorage.removeItem("loginStatus");
+    localStorage.removeItem("jwt");
+    localStorage.removeItem("id");
+    setIsLoggedIn(false);
+    //navigator("/");
+  }
+
+  return (
+    <div id="header">
+      <Box sx={{ flexGrow: 1 }}>
+        <AppBar position="static" style={{ position: 'fixed', top: 0 }}>
+          <Toolbar>
+            <IconButton
+              size="large"
+              edge="start"
+              color="inherit"
+              aria-label="menu"
+              sx={{ mr: 2 }}
+            >
+              <MenuIcon />
+            </IconButton>
+            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }} style={{ textAlign: 'center' }}>
+              <Link href="/" rel="noopener noreferrer" style={{ color: "white" }}>
+                Welcome to Atharva Classes
+              </Link>
+            </Typography>
+            {
+              isLoggedIn &&
+                <AccountCircleIcon fontSize='medium' href="/profile"/>
+          }
+          {
+            !isLoggedIn &&
+            < Button color="inherit" href="/singin">Login</Button>
+          }
+          {
+            !isLoggedIn &&
+                  <Button color="inherit" href="/signup">SignUp</Button>
+              }
+          {
+            isLoggedIn && 
+            <Button color="warning" onClick={logOutUser}>LogOut</Button>
+            }
+
+          </Toolbar>
+        </AppBar>
+      </Box>
+    </div>
+  );
+}
+
+export default Navbar;
