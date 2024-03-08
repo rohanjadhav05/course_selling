@@ -61,6 +61,7 @@ public class HomeController {
 
 	@PostMapping("/login") 
 	public ResponseEntity<?> authenticateAndGetToken(@RequestBody AuthRequest authRequest) { 
+		System.out.println("======== : "+authRequest.toString());
 		Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
 		if (authentication.isAuthenticated()) {  
 			Optional<UserInfo> userInfo = userRepo.findByName(authRequest.getUsername());

@@ -8,11 +8,13 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import Link from '@mui/material/Link';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import Cookies from 'js-cookie';
+import { useRouter } from 'next/router';
 
 function Navbar() {
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+  const router = useRouter();
   //console.log("loginStatus :  " + localStorage['loginStatus']);
-  
   // React.useEffect(() => {
   //   console.log("inside useEffect");
   //   if (localStorage['loginStatus'] == 1) {
@@ -20,20 +22,19 @@ function Navbar() {
   //   }
   // });
 
-  
-  // React.useEffect(() => {
-  //   console.log("is Logged in : "+isLoggedIn);
-  //   if (localStorage['loginStatus'] === '1') {
-  //     setIsLoggedIn(true);
-  //   }
-  // }, [localStorage.loginStatus]);
+  React.useEffect(() => {
+    console.log("is Logged in : "+Cookies.get('loginStatus'));
+    if (Cookies.get('loginStatus') === '1') {
+      setIsLoggedIn(true);
+    }
+  }, [Cookies.get('loginStatus')]);
 
   function logOutUser() {
-    localStorage.removeItem("loginStatus");
-    localStorage.removeItem("jwt");
-    localStorage.removeItem("id");
+    Cookies.remove('loginStatus');
+    Cookies.remove('id');
+    Cookies.remove('jwtToken');
     setIsLoggedIn(false);
-    //navigator("/");
+    router.push('/');
   }
 
   return (
@@ -61,7 +62,7 @@ function Navbar() {
           }
           {
             !isLoggedIn &&
-            < Button color="inherit" href="/singin">Login</Button>
+            < Button color="inherit" href="/signin">Login</Button>
           }
           {
             !isLoggedIn &&
