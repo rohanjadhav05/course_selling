@@ -8,20 +8,15 @@ import { Card } from "@mui/material";
 import { login } from "@/service/service";
 import { NextResponse, NextRequest } from 'next/server'
 import Cookies from 'js-cookie';
-
-// Set a cookie
-
-
-// Get a cookie
-const cookieValue = Cookies.get('myCookie');
-
-
+import { useSetRecoilState } from "recoil";
+import { roleState } from "@/store/atoms/course";
 
 const signin = () => {
 
   const [username, SetUsername] = useState('');
   const [password, SetPassword] = useState('');
   const router = useRouter();
+  const setIsUserRole = useSetRecoilState(roleState);
 
   return <div>
   <div style={{
@@ -80,6 +75,7 @@ const signin = () => {
                         console.log("=----------------------");
                         console.log('JWT : ', result['data'].jwtToken)
                           if (result['data'].roles == 'ROLE_ADMIN') {
+                            setIsUserRole(false);
                             router.push('/admin');
                           } else if (result['data'].roles == 'ROLE_USER') {
                             router.push('/user');

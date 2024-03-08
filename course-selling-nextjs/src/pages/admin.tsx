@@ -2,8 +2,9 @@ import { Button, Card, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import Cookies from 'js-cookie';
 import axios from "axios";
-import { Course } from '@/store/atoms/course';
+import { Course, roleState } from '@/store/atoms/course';
 import { useRouter } from 'next/router';
+import { useRecoilValue } from 'recoil';
 
 function admin() {
     const [course, SetCourses] = useState([]);
@@ -34,8 +35,11 @@ function admin() {
     </div>
   )
 }
+
 export function Course({course} : {course: Course}){
     const router = useRouter();
+    const role = useRecoilValue(roleState);
+    console.log(role);
     return <Card style={{
         margin:10,
         width:300,
@@ -47,9 +51,16 @@ export function Course({course} : {course: Course}){
         <img src={course.courseImage} style={{width:300}}></img>
         <div style={{display:'flex', justifyContent:"center", marginTop:20}}>
             <Button variant="contained" size="large" onClick={() => {
-                router.push("/course/"+course.courseId);
+                if(role){
+                    router.push("/purchase/"+course.courseId);
+                }
+                else{
+                    router.push("/course/"+course.courseId);
+                }   
             }}>
-                Edit
+                {
+                    role ? "Purchase" : "Edit"
+                }
             </Button>
 
         </div>
