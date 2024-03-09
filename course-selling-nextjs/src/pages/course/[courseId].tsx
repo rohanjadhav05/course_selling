@@ -1,7 +1,7 @@
 import { Loading } from '@/component/Loading';
 import { courseState } from '@/store/atoms/course';
 import { courseImage, courseName, coursePrice, isCourseLoading } from '@/store/selectors/course';
-import { Button, Card, Grid, TextField, Typography } from '@mui/material';
+import { Button, Card, Checkbox, FormControlLabel, Grid, TextField, Typography } from '@mui/material';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/router';
@@ -49,7 +49,7 @@ const Course = () => {
                 <CourseCard />
             </Grid>
         </Grid>
-        <div style={{ display: 'flex', justifyContent: 'flex-start', paddingRight: 30 }}>
+        <div style={{ display: 'flex', justifyContent: 'flex-end', paddingRight: 40 }}>
       <Button
         variant="outlined"
         color="inherit"
@@ -57,7 +57,7 @@ const Course = () => {
             router.back();
         }}
       >
-        Previous Page
+        Back
       </Button>
     </div>
     </div>
@@ -84,13 +84,16 @@ function UpdateCard() {
   const [courseDesc, setCourseDesc] = useState(courseDetails.course?.courseDesc);
   const [courseImage, setCourseImage] = useState(courseDetails.course?.courseImage);
   const [coursePrice, setCoursePrice] = useState(courseDetails.course?.coursePrice);
-  
+  const [published, setPublished] = useState(courseDetails.course?.published);
+
   useEffect(() => {
     setCourseId(courseDetails.course?.courseId);
     setCourseName(courseDetails.course?.courseName);
     setCourseDesc(courseDetails.course?.courseDesc);
     setCourseImage(courseDetails.course?.courseImage);
     setCoursePrice(courseDetails.course?.coursePrice);
+    setPublished(courseDetails.course?.published);
+    console.log("object :  "+JSON.stringify(courseDetails, null, 2)+" published : "+published);
   }, [courseDetails]);
 
   return <div style={{display: "flex", justifyContent: "center"}}>
@@ -140,7 +143,16 @@ function UpdateCard() {
               label="Price"
               variant="outlined"
           />
-
+           <FormControlLabel
+              control={<Checkbox value={published} checked={published} onChange={(e) => {
+                                                          setPublished(e.target.checked);
+                                                          if (!e.target.checked) {
+                                                            setPublished(false);
+                                                          }}} 
+                />}
+               label="Course should be Published"
+            />
+            <br/>
           <Button
               variant="contained"
               onClick={async () => {
@@ -149,7 +161,7 @@ function UpdateCard() {
                       courseName: courseName,
                       courseDesc: courseDesc,
                       courseImage: courseImage,
-                      isPublished: true,
+                      published: true,
                       coursePrice
                   }, {
                       headers: {
@@ -162,7 +174,7 @@ function UpdateCard() {
                     courseName: courseName!,
                     courseDesc: courseDesc!,
                     courseImage: courseImage!,
-                    isPublished: true!,
+                    published: true!,
                     coursePrice:coursePrice!
                   };
                   setCourse({isLoading: false, course : updatedCourse});

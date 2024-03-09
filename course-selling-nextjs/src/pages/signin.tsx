@@ -71,15 +71,13 @@ const signin = () => {
                         Cookies.set('jwtToken', payload, { expires: 1 }); // Expires in 7 days
                         Cookies.set('id', result['data'].id, { expires: 1 }); 
                         Cookies.set('loginStatus', "1", { expires: 1 });
-                        console.log(result['data'].id);
-                        console.log("=----------------------");
-                        console.log('JWT : ', result['data'].jwtToken)
-                          if (result['data'].roles == 'ROLE_ADMIN') {
-                            setIsUserRole(false);
-                            router.push('/admin');
-                          } else if (result['data'].roles == 'ROLE_USER') {
-                            router.push('/user');
-                          }
+                        if (result['data'].roles == 'ROLE_ADMIN') {
+                          setIsUserRole(false);
+                          router.push('/admin');
+                        } else if (result['data'].roles == 'ROLE_USER') {
+                          setIsUserRole(true);
+                          router.push('/user');
+                        }
                       }
                     // toast.success("Login Successfully");
                   }).catch(err => {

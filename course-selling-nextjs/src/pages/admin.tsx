@@ -42,14 +42,14 @@ function admin() {
     </div>
     <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}>
       {course.map((c:Course) => {
-        return <Courses key={c.courseId} course={c} />;
+        return <Coursescomp key={c.courseId} course={c} />;
       })}
     </div>
   </div>
   )
 }
 
-export function Courses({course} : {course: Course}){
+export function Coursescomp({course} : {course: Course}){
     const router = useRouter();
     const role = useRecoilValue(roleState);
     return <Card style={{
@@ -60,7 +60,8 @@ export function Courses({course} : {course: Course}){
     }}>
         <Typography textAlign={"center"} variant='h5'>{course.courseName}</Typography>
         <Typography textAlign={"center"} variant='subtitle1'>{course.courseDesc}</Typography>
-        <img src={course.courseImage} style={{width:300}}></img>
+        <img src={course.courseImage} style={{width:300, height:200}}></img>
+        <Typography textAlign={"center"} variant='h6'>Price - {course.coursePrice}</Typography>
         <div style={{display:'flex', justifyContent:"center", marginTop:20}}>
             <Button variant="contained" size="large" onClick={() => {
                 if(role){

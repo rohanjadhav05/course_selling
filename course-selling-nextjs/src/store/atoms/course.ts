@@ -6,7 +6,7 @@ export interface Course{
 	courseDesc : string,
 	coursePrice: number,
 	courseImage : string,
-	isPublished : boolean
+	published : boolean
 }
 
 export const roleState = atom({
