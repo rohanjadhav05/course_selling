@@ -62,11 +62,12 @@ function Navbar() {
           }
           {
             !isLoggedIn &&
-            < Button color="inherit" href="/signin">Login</Button>
+            < Button color="inherit" onClick={() => { router.push("/signin") }}
+            >Login</Button>
           }
           {
             !isLoggedIn &&
-                  <Button color="inherit" href="/signup">SignUp</Button>
+                  <Button color="inherit" onClick={() => {router.push("/signup")}} >SignUp</Button>
               }
           {
             isLoggedIn && 

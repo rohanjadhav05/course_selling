@@ -22,6 +22,7 @@ const Course = () => {
       }
     }).then(res => {
       const result = res.data;
+      console.log("result : "+JSON.stringify(result.data, null, 2))
       if(result.status == "success"){
         setCourse({isLoading : false, course:result.data})
       }
@@ -30,6 +31,7 @@ const Course = () => {
       toast.error("failed");
       console.error(e);
     })
+    console.log("is UseEffect : ");
   }, []);
 
   if(courseLoading){
@@ -37,7 +39,7 @@ const Course = () => {
   }
 
   return (
-    <div id="course">
+    <div id="course" >
         <GrayTopper />
         <Grid container>
           <Grid item lg={8} md={12} sm={12}>
@@ -47,6 +49,17 @@ const Course = () => {
                 <CourseCard />
             </Grid>
         </Grid>
+        <div style={{ display: 'flex', justifyContent: 'flex-start', paddingRight: 30 }}>
+      <Button
+        variant="outlined"
+        color="inherit"
+        onClick={() => {
+            router.back();
+        }}
+      >
+        Previous Page
+      </Button>
+    </div>
     </div>
   )
 }
@@ -72,6 +85,13 @@ function UpdateCard() {
   const [courseImage, setCourseImage] = useState(courseDetails.course?.courseImage);
   const [coursePrice, setCoursePrice] = useState(courseDetails.course?.coursePrice);
   
+  useEffect(() => {
+    setCourseId(courseDetails.course?.courseId);
+    setCourseName(courseDetails.course?.courseName);
+    setCourseDesc(courseDetails.course?.courseDesc);
+    setCourseImage(courseDetails.course?.courseImage);
+    setCoursePrice(courseDetails.course?.coursePrice);
+  }, [courseDetails]);
 
   return <div style={{display: "flex", justifyContent: "center"}}>
   <Card variant='outlined' style={{maxWidth: 600, marginTop: 200}}>
@@ -145,7 +165,6 @@ function UpdateCard() {
                     isPublished: true!,
                     coursePrice:coursePrice!
                   };
-                  console.log("Updated Course : "+JSON.stringify(updatedCourse, null, 2));
                   setCourse({isLoading: false, course : updatedCourse});
               }}
           > Update course</Button>

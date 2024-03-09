@@ -22,6 +22,7 @@ export default function Home() {
                   <Typography variant={"h5"}>
                       A place to learn, earn and grow
                   </Typography>
+                  <br />
                       <div style={{marginRight: 10}}>
                           <Button
                               size={"large"}
@@ -31,6 +32,7 @@ export default function Home() {
                               }}
                           >Signup</Button>
                       </div>
+                      <br/>
                       <div>
                           <Button
                               size={"large"}

@@ -14,7 +14,7 @@ export const roleState = atom({
     default : false
 })
 
-export const courseState = atom<{isLoading: boolean, course: null | Course}>({
+export const courseState = atom<{isLoading: boolean, course: Course | null}>({
     key: 'courseState',
     default: {
       isLoading: true,

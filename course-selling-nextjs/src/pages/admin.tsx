@@ -3,12 +3,13 @@ import React, { useEffect, useState } from 'react'
 import Cookies from 'js-cookie';
 import axios from "axios";
 import { Course, roleState } from '@/store/atoms/course';
-import { useRouter } from 'next/router';
+import { Router, useRouter } from 'next/router';
 import { useRecoilValue } from 'recoil';
+import AddIcon from '@mui/icons-material/Add';
 
 function admin() {
     const [course, SetCourses] = useState([]);
-
+    const router = useRouter();
     const init = async () => {
         const response = await axios.get("http://localhost:8080/admin/getAllCourse", {
             headers : {
@@ -25,21 +26,32 @@ function admin() {
         init();
     }, []);
 
-  return (
-    <div id="admin" style={{paddingTop:70, display:"flex", flexWrap:"wrap", justifyContent:"center"}}>
-        {
-            course.map(c => {
-                return <Course course={c} />
-            })
-        }
+  return ( 
+    <div id="admin" style={{ paddingTop: 70 }}>
+    <div style={{ display: 'flex', justifyContent: 'flex-end', paddingRight: 30 }}>
+      <Button
+        variant="outlined"
+        color="inherit"
+        startIcon={<AddIcon sx={{ fontSize: 10 }} />}
+        onClick={() => {
+            router.push("/add");
+        }}
+      >
+        Create Course
+      </Button>
     </div>
+    <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}>
+      {course.map((c:Course) => {
+        return <Courses key={c.courseId} course={c} />;
+      })}
+    </div>
+  </div>
   )
 }
 
-export function Course({course} : {course: Course}){
+export function Courses({course} : {course: Course}){
     const router = useRouter();
     const role = useRecoilValue(roleState);
-    console.log(role);
     return <Card style={{
         margin:10,
         width:300,
