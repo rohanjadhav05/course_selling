@@ -1,25 +1,21 @@
 import { Button, Card, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
-import Cookies from 'js-cookie';
-import axios from "axios";
 import { Course, roleState } from '@/store/atoms/course';
-import { Router, useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import { useRecoilValue } from 'recoil';
 import AddIcon from '@mui/icons-material/Add';
+import { getAllcourses } from '@/service/AdminService';
 
 function admin() {
     const [course, SetCourses] = useState([]);
     const router = useRouter();
     const init = async () => {
-        const response = await axios.get("http://localhost:8080/admin/getAllCourse", {
-            headers : {
-                Authorization : `Bearer ${Cookies.get('jwtToken')}`
+        getAllcourses().then(response => {
+            const result = response.data;
+            if(result.status == "success"){
+                SetCourses(result.data);
             }
-        })
-        const result = response.data;
-        if(result.status == "success"){
-            SetCourses(result.data);
-        }
+        });   
     }
 
     useEffect(() => {

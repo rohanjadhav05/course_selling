@@ -1,10 +1,12 @@
 import Head from "next/head";
 import Image from "next/image";
 import { Inter } from "next/font/google";
+import Cookies from 'js-cookie';
 import { Button, Grid, Typography } from "@mui/material";
 import { useRouter } from 'next/router'
 import { userEmailState } from "@/store/selectors/user";
 import { useRecoilValue } from "recoil";
+import { useEffect, useState } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -12,6 +14,14 @@ export default function Home() {
   const router = useRouter();
   const userEmail = useRecoilValue(userEmailState);
   console.log("userRmail : "+userEmail);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    console.log("is Logged in : "+Cookies.get('loginStatus'));
+    if (Cookies.get('loginStatus') === '1') {
+      setIsLoggedIn(true);
+    }
+  }, [Cookies.get('loginStatus')]);
 
   return (
     <>
@@ -26,7 +36,7 @@ export default function Home() {
                       A place to learn, earn and grow
                   </Typography>
                   <br />
-                    { !userEmail &&
+                    { !isLoggedIn &&
                       <div style={{marginRight: 10}}>
                           <Button
                               size={"large"}
@@ -38,7 +48,7 @@ export default function Home() {
                       </div>
                     }   
                      <br/>
-                    { !userEmail &&
+                    { !isLoggedIn &&
                       <div>
                           <Button
                               size={"large"}

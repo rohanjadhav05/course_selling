@@ -1,23 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import Cookies from 'js-cookie';
-import axios from 'axios';
 import { toast } from 'react-toastify';
 import { Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import { Course } from '@/store/atoms/course';
 import { useRouter } from 'next/router';
+import { getPurchasedCourseService } from '@/service/UserService';
 
 const purchasedCourses = () => {
     const [courses, setCourses] = useState([]);
-    const id = Cookies.get("id");
-    const headers = { headers: { Authorization: `Bearer ${Cookies.get('jwtToken')}` } }
     const router = useRouter();
     useEffect(() => {
         getPurchasedCourse();
     },[]);
 
     function getPurchasedCourse(){
-        axios.get("http://localhost:8080/user/purchasedCourse/"+id,headers)
-            .then(response => {
+        getPurchasedCourseService().then(response => {
                 const result = response.data;
                 if(result.status == 'success'){
                     setCourses(result.data);

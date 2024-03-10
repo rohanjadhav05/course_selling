@@ -1,6 +1,5 @@
+import { addCourse } from '@/service/AdminService';
 import { Button, Card, TextField, Typography } from '@mui/material'
-import axios from 'axios';
-import Cookies from 'js-cookie';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react'
 import { toast } from 'react-toastify';
@@ -63,17 +62,14 @@ const add = () => {
                     size={"large"}
                     variant="contained"
                     onClick={async () => {
-                        await axios.post(`http://localhost:8080/admin/addCourse`, {
-                                courseName: courseName,
-                                courseDesc: courseDesc,
-                                courseImage: courseImage,
-                                published: true,
-                                coursePrice:coursePrice
-                        }, {
-                            headers: {
-                                "Authorization": `Bearer ${Cookies.get('jwtToken')}`
-                            }
-                        });
+                        let courseDto = {
+                            courseName: courseName,
+                            courseDesc: courseDesc,
+                            courseImage: courseImage,
+                            published: true,
+                            coursePrice:coursePrice
+                        }
+                        addCourse(courseDto);
                         toast.success("Added course!");
                         router.push("/admin");
                     }}

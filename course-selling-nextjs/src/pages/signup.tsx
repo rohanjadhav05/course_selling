@@ -8,7 +8,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import { toast } from 'react-toastify' 
-import { createUser } from '../service/service';
+import { createUser, googleLogin } from '../service/HomeService';
 import { Card } from '@mui/material';
 import { useRouter } from 'next/router';
 import { GoogleLogin, useGoogleLogin } from '@react-oauth/google';
@@ -26,8 +26,7 @@ const signup = () => {
   const setIsUserRole = useSetRecoilState(roleState);
   
   function onGoogleSucces(response : any){
-    console.log(response);
-    axios.post("http://localhost:8080/home/googleSuccess", response)
+    googleLogin(response)
       .then(response => {
         const result = response.data;
         if(result.status == "success"){

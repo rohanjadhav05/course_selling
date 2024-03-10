@@ -5,8 +5,7 @@ import Typography from "@mui/material/Typography";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import { Card } from "@mui/material";
-import { login } from "@/service/service";
-import { NextResponse, NextRequest } from 'next/server'
+import { login } from "@/service/HomeService";
 import Cookies from 'js-cookie';
 import { useSetRecoilState } from "recoil";
 import { roleState } from "@/store/atoms/course";
@@ -21,6 +20,7 @@ const signin = () => {
   const router = useRouter();
   const setIsUserRole = useSetRecoilState(roleState);
   const setUser = useSetRecoilState(userState);
+  const setEmail = useSetRecoilState(userState);
 
   function onGoogleSucces(response : any){
     console.log(response);
@@ -33,6 +33,7 @@ const signin = () => {
           Cookies.set('loginStatus', "1", { expires: 1 });
           setIsUserRole(true);
           router.push("/user");
+          setEmail(result['data'].id);
           toast.success("Successfully Login In");
         }
         else{
@@ -124,6 +125,7 @@ const signin = () => {
                             text='signup_with'
                             shape='circle'
                             onSuccess={credentialResponse => {
+                              console.log(credentialResponse.credential);
                               onGoogleSucces(credentialResponse.credential);
                             }}
                             onError={() => {

@@ -9,6 +9,7 @@ import { toast } from 'react-toastify';
 import { error } from 'console';
 import { Loading } from '@/component/Loading';
 import { Button, Card, TextField, Typography } from '@mui/material';
+import { getCourseById, purchaseCourse } from '@/service/UserService';
 
 const Purchase = () => {
     const router = useRouter();
@@ -20,11 +21,7 @@ const Purchase = () => {
     const courseLoading = useRecoilValue(isCourseLoading);
 
     useEffect(() => {
-        axios.get(`http://localhost:8080/user/getCourse/${courseId}`, {
-          headers : {
-            "Authorization" : `Bearer ${Cookies.get('jwtToken')}`
-          }
-        }).then(res => {
+        getCourseById(courseId).then(res => {
           const result = res.data;
           console.log("result : "+JSON.stringify(result.data, null, 2))
           if(result.status == "success"){
@@ -107,14 +104,12 @@ function TextBox(){
                     color="primary"
                     variant='contained'
                     onClick={async() =>{
-                        axios.post("http://localhost:8080/user/purchase", {
+                        let mappedUserDto = {
                             mappedUserId : Cookies.get("id"),
                             mappedCourseId : courseId
-                        },{
-                            headers : {
-                                Authorization : `Bearer ${Cookies.get('jwtToken')}`
-                            }
-                        }).then(response => {
+                        }
+                        purchaseCourse(mappedUserDto)
+                        .then(response => {
                             console.log("purchase  : "+response.data);
                             toast.success("coursed Purchased Succesfully");
                             router.push("/user");

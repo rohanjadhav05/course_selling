@@ -1,6 +1,7 @@
+import { BASE_URL } from "@/config";
 import axios from "axios";
+const REST_API_BASE_URL_HOME = BASE_URL+"/home";
 
-const REST_API_BASE_URL_HOME = "http://localhost:8080/home";
 export interface userDto {
     name : string,
     email : string,
@@ -14,6 +15,10 @@ export interface loginDto {
 }
 export const createUser = (userDto : userDto) => {
     return axios.post(REST_API_BASE_URL_HOME+"/signup", userDto);
+}
+
+export const googleLogin = (token : string) => {
+    return axios.post(REST_API_BASE_URL_HOME+"/googleSuccess", token);
 }
 
 export const login = (loginDto : loginDto) => {

@@ -1,4 +1,5 @@
 import { Loading } from '@/component/Loading';
+import { getCourseById, updateCourse } from '@/service/AdminService';
 import { courseState } from '@/store/atoms/course';
 import { courseImage, courseName, coursePrice, isCourseLoading } from '@/store/selectors/course';
 import { Button, Card, Checkbox, FormControlLabel, Grid, TextField, Typography } from '@mui/material';
@@ -16,11 +17,7 @@ const Course = () => {
   const courseLoading = useRecoilValue(isCourseLoading);
 
   useEffect(() => {
-    axios.get(`http://localhost:8080/admin/getCourse/${courseId}`, {
-      headers : {
-        "Authorization" : `Bearer ${Cookies.get('jwtToken')}`
-      }
-    }).then(res => {
+    getCourseById(courseId).then(res => {
       const result = res.data;
       console.log("result : "+JSON.stringify(result.data, null, 2))
       if(result.status == "success"){
@@ -156,19 +153,6 @@ function UpdateCard() {
           <Button
               variant="contained"
               onClick={async () => {
-                  axios.put(`http://localhost:8080/admin/updateCourse`, {
-                      courseId : courseId,
-                      courseName: courseName,
-                      courseDesc: courseDesc,
-                      courseImage: courseImage,
-                      published: true,
-                      coursePrice
-                  }, {
-                      headers: {
-                          "Content-type": "application/json",
-                          "Authorization" : `Bearer ${Cookies.get('jwtToken')}`
-                      }
-                  });
                   let updatedCourse = {
                     courseId : courseId!,
                     courseName: courseName!,
@@ -177,7 +161,9 @@ function UpdateCard() {
                     published: true!,
                     coursePrice:coursePrice!
                   };
+                  updateCourse(updatedCourse);
                   setCourse({isLoading: false, course : updatedCourse});
+                  toast.success("updated successfully");
               }}
           > Update course</Button>
       </div>

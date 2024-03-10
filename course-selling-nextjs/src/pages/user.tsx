@@ -6,27 +6,25 @@ import { Coursescomp } from './admin';
 import { Course } from '@/store/atoms/course';
 import { Button, Typography } from '@mui/material';
 import { useRouter } from 'next/router';
+import { getpublishedCourse } from '@/service/UserService';
 
 const user = () => {
   const [course, setCourse ] = useState([]);
   const router = useRouter();
+  
   const init = async () => {
-    const response = await axios.get('http://localhost:8080/user/courses', {
-        headers : {
-            "Authorization" : `Bearer ${Cookies.get('jwtToken')}`
-        }
+    getpublishedCourse().then(response => {
+      const result = response.data;
+      console.log(result);
+      if(result.status == "success"){
+          setCourse(result.data);
+      }
+      else{
+          toast.error("failed");
+      }
     })
-    const result = response.data;
-    console.log(result);
-    if(result.status == "success"){
-        setCourse(result.data);
-    }
-    else{
-        toast.error("failed");
-    }
   }
     useEffect(() => {
-        console.log("inside the useEffect : ");
         init();
     }, []);
 
