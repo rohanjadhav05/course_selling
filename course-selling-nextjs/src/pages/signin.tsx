@@ -10,6 +10,9 @@ import { NextResponse, NextRequest } from 'next/server'
 import Cookies from 'js-cookie';
 import { useSetRecoilState } from "recoil";
 import { roleState } from "@/store/atoms/course";
+import { userState } from "@/store/atoms/user";
+import { GoogleLogin } from "@react-oauth/google";
+import axios from "axios";
 
 const signin = () => {
 
@@ -17,6 +20,29 @@ const signin = () => {
   const [password, SetPassword] = useState('');
   const router = useRouter();
   const setIsUserRole = useSetRecoilState(roleState);
+  const setUser = useSetRecoilState(userState);
+
+  function onGoogleSucces(response : any){
+    console.log(response);
+    axios.post("http://localhost:8080/home/googleSuccess", response)
+      .then(response => {
+        const result = response.data;
+        if(result.status == "success"){
+          Cookies.set('jwtToken', result.data.jwtToken, { expires: 1 }); // Expires in 7 days
+          Cookies.set('id', result['data'].id, { expires: 1 }); 
+          Cookies.set('loginStatus', "1", { expires: 1 });
+          setIsUserRole(true);
+          router.push("/user");
+          toast.success("Successfully Login In");
+        }
+        else{
+          toast.error("Failed");
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      })
+  }
 
   return <div>
   <div style={{
@@ -54,6 +80,7 @@ const signin = () => {
       <Button
           size={"large"}
           variant="contained"
+          fullWidth 
           onClick={async () =>{
                 const loginUserDto = {username, password};
               if(username.length == 0){
@@ -71,6 +98,10 @@ const signin = () => {
                         Cookies.set('jwtToken', payload, { expires: 1 }); // Expires in 7 days
                         Cookies.set('id', result['data'].id, { expires: 1 }); 
                         Cookies.set('loginStatus', "1", { expires: 1 });
+                        setUser({
+                          userEmail : loginUserDto.username,
+                          isLoading:false
+                        })
                         if (result['data'].roles == 'ROLE_ADMIN') {
                           setIsUserRole(false);
                           router.push('/admin');
@@ -87,8 +118,21 @@ const signin = () => {
           }
          }
       > Signup</Button>
-  </Card>
-</div>
+      <br/> <br/>
+      <div style={{display:'flex', justifyContent:"center"}}>
+                            <GoogleLogin
+                            text='signup_with'
+                            shape='circle'
+                            onSuccess={credentialResponse => {
+                              onGoogleSucces(credentialResponse.credential);
+                            }}
+                            onError={() => {
+                              console.log('Login Failed');
+                            }}
+                          />
+                        </div>
+        </Card>
+      </div>
 </div>;
 }
 

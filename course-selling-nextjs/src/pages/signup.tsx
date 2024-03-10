@@ -11,6 +11,11 @@ import { toast } from 'react-toastify'
 import { createUser } from '../service/service';
 import { Card } from '@mui/material';
 import { useRouter } from 'next/router';
+import { GoogleLogin, useGoogleLogin } from '@react-oauth/google';
+import axios from 'axios';
+import Cookies from 'js-cookie';
+import { useSetRecoilState } from 'recoil';
+import { roleState } from '@/store/atoms/course';
 
 const signup = () => {
   const [name, SetName] = useState('');
@@ -18,7 +23,30 @@ const signup = () => {
   const [password, SetPassword] = useState('');
   const [roles, SetRoles] = useState('');
   const router = useRouter();
+  const setIsUserRole = useSetRecoilState(roleState);
   
+  function onGoogleSucces(response : any){
+    console.log(response);
+    axios.post("http://localhost:8080/home/googleSuccess", response)
+      .then(response => {
+        const result = response.data;
+        if(result.status == "success"){
+          Cookies.set('jwtToken', result.data.jwtToken, { expires: 1 }); // Expires in 7 days
+          Cookies.set('id', result['data'].id, { expires: 1 }); 
+          Cookies.set('loginStatus', "1", { expires: 1 });
+          setIsUserRole(true);
+          router.push("/user");
+          toast.success("Successfully Login In");
+        }
+        else{
+          toast.error("Failed");
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      })
+  }
+
   return (
     <div id = 'signup'>
         <div style={{
@@ -110,6 +138,21 @@ const signup = () => {
                   }}
                   
                   >Sign Up</Button>
+                  <br/>
+                  <br/>
+                  <div style={{display:'flex', justifyContent:"center"}}>
+                      <GoogleLogin
+                      text='signup_with'
+                      shape='circle'
+                      onSuccess={credentialResponse => {
+                        onGoogleSucces(credentialResponse.credential);
+                      }}
+                      onError={() => {
+                        console.log('Login Failed');
+                      }}
+                    />
+                  </div>
+                
             </Card>
           </div>
       </div>

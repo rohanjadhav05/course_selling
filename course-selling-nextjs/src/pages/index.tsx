@@ -1,14 +1,17 @@
 import Head from "next/head";
 import Image from "next/image";
 import { Inter } from "next/font/google";
-import styles from "@/styles/Home.module.css";
 import { Button, Grid, Typography } from "@mui/material";
 import { useRouter } from 'next/router'
+import { userEmailState } from "@/store/selectors/user";
+import { useRecoilValue } from "recoil";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
   const router = useRouter();
+  const userEmail = useRecoilValue(userEmailState);
+  console.log("userRmail : "+userEmail);
 
   return (
     <>
@@ -23,6 +26,7 @@ export default function Home() {
                       A place to learn, earn and grow
                   </Typography>
                   <br />
+                    { !userEmail &&
                       <div style={{marginRight: 10}}>
                           <Button
                               size={"large"}
@@ -32,7 +36,9 @@ export default function Home() {
                               }}
                           >Signup</Button>
                       </div>
-                      <br/>
+                    }   
+                     <br/>
+                    { !userEmail &&
                       <div>
                           <Button
                               size={"large"}
@@ -42,6 +48,7 @@ export default function Home() {
                               }}
                           >Signin</Button>
                       </div>
+                    }
                   </div>
               <div>
               </div>

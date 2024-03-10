@@ -14,14 +14,6 @@ import { useRouter } from 'next/router';
 function Navbar() {
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
   const router = useRouter();
-  //console.log("loginStatus :  " + localStorage['loginStatus']);
-  // React.useEffect(() => {
-  //   console.log("inside useEffect");
-  //   if (localStorage['loginStatus'] == 1) {
-  //     setIsLoggedIn(true);
-  //   }
-  // });
-
   React.useEffect(() => {
     console.log("is Logged in : "+Cookies.get('loginStatus'));
     if (Cookies.get('loginStatus') === '1') {

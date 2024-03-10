@@ -29,10 +29,11 @@ public class UserInfoService implements UserDetailsService {
 				.orElseThrow(() -> new UsernameNotFoundException("User not found " + username)); 
 	} 
 
-	public String addUser(UserInfo userInfo) { 
-		userInfo.setPassword(encoder.encode(userInfo.getPassword())); 
-		repository.save(userInfo); 
-		return "User Added Successfully"; 
+	public UserInfo addUser(UserInfo userInfo) { 
+		if(userInfo.getPassword() != null) {
+			userInfo.setPassword(encoder.encode(userInfo.getPassword())); 
+		}
+		return repository.save(userInfo); 
 	} 
 	
 	public String changePassword(AuthRequest authRequest){
