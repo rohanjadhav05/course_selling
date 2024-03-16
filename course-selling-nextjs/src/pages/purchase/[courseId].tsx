@@ -1,12 +1,10 @@
-import { courseState } from '@/store/atoms/course';
+import { courseState, drawerState } from '@/store/atoms/course';
 import { isCourseLoading } from '@/store/selectors/course';
-import axios from 'axios';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react'
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import Cookies from 'js-cookie';
 import { toast } from 'react-toastify';
-import { error } from 'console';
 import { Loading } from '@/component/Loading';
 import { Button, Card, TextField, Typography } from '@mui/material';
 import { getCourseById, purchaseCourse } from '@/service/UserService';
@@ -15,9 +13,6 @@ const Purchase = () => {
     const router = useRouter();
     const { courseId } = router.query;
     const [courseDetails, setCourse] = useRecoilState(courseState);
-    const [courseName, setCourseName] = useState(courseDetails.course?.courseName);
-    const [courseDesc, setCourseDesc] = useState(courseDetails.course?.courseDesc);
-    const [coursePrice, setCoursePrice] = useState(courseDetails.course?.coursePrice);
     const courseLoading = useRecoilValue(isCourseLoading);
 
     useEffect(() => {
@@ -61,6 +56,7 @@ function TextBox(){
     const [coursePrice, setCoursePrice] = useState(courseDetails.course?.coursePrice);
     const [published, setPublished] = useState(courseDetails.course?.published);
     const router = useRouter();
+    const drawerValue = useRecoilValue(drawerState);
 
     useEffect(() => {
         setCourseId(courseDetails.course?.courseId);
@@ -69,11 +65,11 @@ function TextBox(){
         setCourseImage(courseDetails.course?.courseImage);
         setCoursePrice(courseDetails.course?.coursePrice);
         setPublished(courseDetails.course?.published);
-        console.log("object :  "+JSON.stringify(courseDetails, null, 2)+" published : "+published);
     }, [courseDetails]);
 
     return (
-        <Card variant={"outlined"} style={{width: 400, padding: 20}}>
+        <div id = "purchase" style={{ paddingLeft : drawerValue ? 250 : 0}}>
+        <Card variant={"outlined"} style={{width: 400, padding: 20 }}>
                 <TextField
                         value={courseDetails.course?.courseName}
                         fullWidth={true}
@@ -121,6 +117,17 @@ function TextBox(){
                     }}
                     >Purchase Course</Button>
                 </Card>
+        <br />
+        <br/>
+        <div style={{ display: 'flex', justifyContent: 'flex-end', paddingRight: 40 }}>
+            <Button  variant="outlined"
+            color="inherit"
+            onClick={() => {
+                router.back();
+            }}>Back</Button>
+        </div>
+    </div>
+        
     )
 }
 

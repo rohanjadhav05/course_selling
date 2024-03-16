@@ -10,14 +10,15 @@ import Link from '@mui/material/Link';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/router';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { drawerState } from '@/store/atoms/course';
+import { userState } from '@/store/atoms/user';
 
 function Navbar() {
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
   const router = useRouter();
   const [drawe, setDrawer] = useRecoilState(drawerState);
-
+  const [User, setUser] = useRecoilState(userState);
   React.useEffect(() => {
     console.log("is Logged in : "+Cookies.get('loginStatus'));
     if (Cookies.get('loginStatus') === '1') {
@@ -30,6 +31,10 @@ function Navbar() {
     Cookies.remove('id');
     Cookies.remove('jwtToken');
     setIsLoggedIn(false);
+    setUser({
+      isLoading:true,
+      userEmail :null
+    })
     router.push('/');
   }
   const toggleDrawer = () => {
@@ -37,7 +42,7 @@ function Navbar() {
   };
 
   return (
-    <div id="header" style={{ position: 'fixed', top: 0, zIndex: 1, width: '100%' }} >
+    <div id="header" style={{ position: 'fixed', top: 0, zIndex: 10000, width: '100%' }} >
       <Box sx={{ flexGrow: 1 }}>
         <AppBar position="static">
           <Toolbar>

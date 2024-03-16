@@ -20,7 +20,6 @@ const signin = () => {
   const router = useRouter();
   const setIsUserRole = useSetRecoilState(roleState);
   const setUser = useSetRecoilState(userState);
-
   const setEmail = useSetRecoilState(userState);
 
   function onGoogleSucces(response : any){
@@ -33,9 +32,14 @@ const signin = () => {
           Cookies.set('id', result['data'].id, { expires: 1 }); 
           Cookies.set('loginStatus', "1", { expires: 1 });
           setIsUserRole(true);
-          router.push("/user");
+          setUser({
+            isLoading:false,
+            userEmail : result['data'].id
+          })
           setEmail(result['data'].id);
           toast.success("Successfully Login In");
+          router.push("/user");
+          
         }
         else{
           toast.error("Failed");

@@ -1,16 +1,13 @@
-import { Button, Card, Drawer, Typography } from '@mui/material'
+import { Button, Card, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { Course, drawerState, roleState } from '@/store/atoms/course';
 import { useRouter } from 'next/router';
 import { useRecoilValue } from 'recoil';
-import AddIcon from '@mui/icons-material/Add';
 import { getAllcourses } from '@/service/AdminService';
-import AttachMoneyOutlinedIcon from '@mui/icons-material/AttachMoneyOutlined';
 import { toast } from 'react-toastify';
 
 function admin() {
     const [course, SetCourses] = useState([]);
-    const router = useRouter();
     const drawerValue = useRecoilValue(drawerState);
 
     const init = async () => {
@@ -31,43 +28,6 @@ function admin() {
 
   return ( 
     <div style={{ display: 'flex' }}>
-        <Drawer
-            open={drawerValue}
-            variant="persistent"
-            anchor="left"
-            style={{zIndex:0, padding:10}}
-        >
-            {/* Drawer content goes here */}
-            <div style={{ width: 250, height:'100vh', padding:20 ,paddingTop:100, backgroundColor:'#aeccf5', display: "block", justifyContent:"center"}}>
-            {/* Drawer content */}
-            <Typography style={{padding:20}}>Main Menu</Typography>
-            <Button
-                variant="text"
-                color="inherit"
-                startIcon={<AddIcon sx={{ fontSize: 10 }} />}
-                onClick={() => {
-                router.push("/add");
-                }}
-                style={{padding:10}}
-            >
-                Create Course
-            </Button>
-            <br />
-            <br />
-            <Button
-                variant="text"
-                color="inherit"
-                startIcon={<AttachMoneyOutlinedIcon sx={{ fontSize: 10 }} />}
-                onClick={() => {
-                router.push("/sales");
-                }}
-                style={{padding:10}}
-            >
-                
-                Course Sales
-            </Button>
-            </div>
-            </Drawer>
         <div id="admin" style={{ paddingTop: 70, marginLeft: drawerValue ? 250 : 0 }}>
         <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}>
         {course.map((c:Course) => {

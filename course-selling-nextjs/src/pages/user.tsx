@@ -1,16 +1,14 @@
-import axios from 'axios';
 import React, { useEffect, useState } from 'react'
-import Cookies from 'js-cookie';
 import { toast } from 'react-toastify'; 
 import { Coursescomp } from './admin';
-import { Course } from '@/store/atoms/course';
-import { Button, Typography } from '@mui/material';
-import { useRouter } from 'next/router';
+import { Course, drawerState } from '@/store/atoms/course';
+import { Typography } from '@mui/material';
 import { getpublishedCourse } from '@/service/UserService';
+import { useRecoilValue } from 'recoil';
 
 const user = () => {
   const [course, setCourse ] = useState([]);
-  const router = useRouter();
+  const drawerValue = useRecoilValue(drawerState);
   
   const init = async () => {
     getpublishedCourse().then(response => {
@@ -29,16 +27,11 @@ const user = () => {
     }, []);
 
   return (
-    <div id = "user" style={{paddingTop:70}} >
+    <div id = "user" style={{paddingTop:70, marginLeft: drawerValue ? 250 : 0}} >
       <div>
         <Typography variant='h5' style={{display: "flex", justifyContent:'center'}}>
             All available  Courses
         </Typography>
-      </div>
-      <div style={{display:"flex", justifyContent:"flex-end", paddingRight:30}} >
-      <Button onClick={() => {
-        router.push("/purchasedCourses")
-      }}>View Purchased Courses</Button>
       </div>
       <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", paddingTop:20}}>
         {course.map((c:Course) => {

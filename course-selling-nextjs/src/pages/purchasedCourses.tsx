@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
-import { Course } from '@/store/atoms/course';
+import { Course, drawerState } from '@/store/atoms/course';
 import { useRouter } from 'next/router';
 import { getPurchasedCourseService } from '@/service/UserService';
+import { useRecoilValue } from 'recoil';
 
 const purchasedCourses = () => {
     const [courses, setCourses] = useState([]);
     const router = useRouter();
+    const drawerValue = useRecoilValue(drawerState);
+
     useEffect(() => {
         getPurchasedCourse();
     },[]);
@@ -29,7 +32,7 @@ const purchasedCourses = () => {
     
     return (
         <div>
-        <div id="purchasedCourses" style={{ paddingTop:100}}>
+        <div id="purchasedCourses" style={{ paddingTop:100, paddingLeft : drawerValue ? 250 : 0}}>
              <h2 style={{textAlign:'center'}}>User Portal - View Purchased Courses</h2>
         <TableContainer component={Paper} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
             <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table" style={{padding:30}}>

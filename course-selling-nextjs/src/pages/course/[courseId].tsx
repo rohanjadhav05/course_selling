@@ -1,10 +1,8 @@
 import { Loading } from '@/component/Loading';
 import { getCourseById, updateCourse } from '@/service/AdminService';
-import { courseState } from '@/store/atoms/course';
+import { courseState, drawerState } from '@/store/atoms/course';
 import { courseImage, courseName, coursePrice, isCourseLoading } from '@/store/selectors/course';
 import { Button, Card, Checkbox, FormControlLabel, Grid, TextField, Typography } from '@mui/material';
-import axios from 'axios';
-import Cookies from 'js-cookie';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify';
@@ -82,6 +80,7 @@ function UpdateCard() {
   const [courseImage, setCourseImage] = useState(courseDetails.course?.courseImage);
   const [coursePrice, setCoursePrice] = useState(courseDetails.course?.coursePrice);
   const [published, setPublished] = useState(courseDetails.course?.published);
+  const drawerValue = useRecoilValue(drawerState);
 
   useEffect(() => {
     setCourseId(courseDetails.course?.courseId);
@@ -93,7 +92,7 @@ function UpdateCard() {
     console.log("object :  "+JSON.stringify(courseDetails, null, 2)+" published : "+published);
   }, [courseDetails]);
 
-  return <div style={{display: "flex", justifyContent: "center"}}>
+  return <div style={{display: "flex", justifyContent: "center", marginLeft : drawerValue ? 175 : 0 }}>
   <Card variant='outlined' style={{maxWidth: 600, marginTop: 200}}>
       <div style={{padding: 20}}>
           <Typography style={{marginBottom: 10}}>Update course details</Typography>

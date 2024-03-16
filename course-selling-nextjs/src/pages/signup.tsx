@@ -16,6 +16,7 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 import { useSetRecoilState } from 'recoil';
 import { roleState } from '@/store/atoms/course';
+import { userState } from '@/store/atoms/user';
 
 const signup = () => {
   const [name, SetName] = useState('');
@@ -23,6 +24,7 @@ const signup = () => {
   const [password, SetPassword] = useState('');
   const [roles, SetRoles] = useState('');
   const router = useRouter();
+  const setUser = useSetRecoilState(userState);
   const setIsUserRole = useSetRecoilState(roleState);
   
   function onGoogleSucces(response : any){
@@ -34,8 +36,12 @@ const signup = () => {
           Cookies.set('id', result['data'].id, { expires: 1 }); 
           Cookies.set('loginStatus', "1", { expires: 1 });
           setIsUserRole(true);
-          router.push("/user");
+          setUser({
+            isLoading:false,
+            userEmail : result['data'].id
+          })
           toast.success("Successfully Login In");
+          router.push("/user");
         }
         else{
           toast.error("Failed");

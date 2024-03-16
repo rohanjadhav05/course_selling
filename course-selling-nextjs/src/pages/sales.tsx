@@ -1,15 +1,17 @@
 import { getCourseSales } from '@/service/AdminService';
 import { Sales } from '@/service/HomeService';
+import { drawerState } from '@/store/atoms/course';
 import { Button, Card, CardContent, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify';
+import { useRecoilValue } from 'recoil';
 
 const sales = () => {
   
     const [sales, setSales] = useState([]);
     const router = useRouter();
-
+    const drawerValue = useRecoilValue(drawerState);
     
     useEffect(() => {
         getSales();
@@ -38,9 +40,9 @@ const sales = () => {
     }
 
   return (
-    <div id = "sales">
-        <div id="sales" style={{ paddingTop:100}}>
-             <h2 style={{textAlign:'center'}}>User Portal - View Purchased Courses</h2>
+    <div id = "sales" style={{ paddingTop:100, marginLeft: drawerValue ? 250 : 0}}>
+        <div>
+             <h2 style={{textAlign:'center'}}>Admin Portal - View Sales</h2>
         <TableContainer component={Paper} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
             <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table" style={{padding:30}}>
             <TableHead>
@@ -70,17 +72,16 @@ const sales = () => {
         </Table>
       </TableContainer>
         </div>
-
         <Card variant="outlined" style={{ maxWidth: 300, margin: 'auto', marginTop: 20 }}>
-        <CardContent>
-            <Typography variant="h5" component="div">
-            Total Amount Generated
-            </Typography>
-            <Typography variant="h4" style={{ marginTop: 10 }}>
-            Rs {calculate()}
-            </Typography>
-        </CardContent>
-    </Card>
+            <CardContent>
+                <Typography variant="h5" component="div">
+                Total Amount Generated
+                </Typography>
+                <Typography variant="h4" style={{ marginTop: 10 }}>
+                Rs {calculate()}
+                </Typography>
+            </CardContent>
+        </Card>
         <br />
         <br/>
         <div style={{ display: 'flex', justifyContent: 'flex-end', paddingRight: 40 }}>
