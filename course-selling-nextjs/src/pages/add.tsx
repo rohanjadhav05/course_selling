@@ -76,6 +76,15 @@ const add = () => {
                 > Add course</Button>
             </Card>
         </div>
+        <br />
+        <br/>
+        <div style={{ display: 'flex', justifyContent: 'flex-end', paddingRight: 40 }}>
+            <Button  variant="outlined"
+            color="inherit"
+            onClick={() => {
+                router.back();
+            }}>Back</Button>
+        </div>
     </div>
   )
 }

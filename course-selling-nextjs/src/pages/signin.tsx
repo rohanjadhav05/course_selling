@@ -5,7 +5,7 @@ import Typography from "@mui/material/Typography";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import { Card } from "@mui/material";
-import { login } from "@/service/HomeService";
+import { googleLogin, login } from "@/service/HomeService";
 import Cookies from 'js-cookie';
 import { useSetRecoilState } from "recoil";
 import { roleState } from "@/store/atoms/course";
@@ -20,11 +20,12 @@ const signin = () => {
   const router = useRouter();
   const setIsUserRole = useSetRecoilState(roleState);
   const setUser = useSetRecoilState(userState);
+
   const setEmail = useSetRecoilState(userState);
 
   function onGoogleSucces(response : any){
     console.log(response);
-    axios.post("http://localhost:8080/home/googleSuccess", response)
+    googleLogin(response)
       .then(response => {
         const result = response.data;
         if(result.status == "success"){
@@ -100,8 +101,8 @@ const signin = () => {
                         Cookies.set('id', result['data'].id, { expires: 1 }); 
                         Cookies.set('loginStatus', "1", { expires: 1 });
                         setUser({
-                          userEmail : loginUserDto.username,
-                          isLoading:false
+                          isLoading:false,
+                          userEmail :loginUserDto.username
                         })
                         if (result['data'].roles == 'ROLE_ADMIN') {
                           setIsUserRole(false);

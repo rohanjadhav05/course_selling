@@ -108,6 +108,7 @@ public class HomeController {
 			UserInfo user = userInfo.get();
 			LoginResponeDto loginDto = new LoginResponeDto(user.getId(), user.getName(), user.getEmail(),
 					user.getRoles(), jwtService.generateToken(authRequest.getUsername()));
+			System.out.println("-------- Login Dto : "+loginDto.toString());
 			return Response.success(loginDto);
 		} else {
 			throw new UsernameNotFoundException("invalid user request !");

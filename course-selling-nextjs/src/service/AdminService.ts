@@ -20,3 +20,7 @@ export const updateCourse = (courseDto : any) => {
 export const addCourse = (courseDto : any) => {
     return axios.post(REST_API_BASE_URL_ADMIN+"/addCourse", courseDto, header);
 }
+
+export const getCourseSales = () => {
+    return axios.get(REST_API_BASE_URL_ADMIN+"/getAnaylsis",header);
+}

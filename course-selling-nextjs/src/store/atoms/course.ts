@@ -21,3 +21,8 @@ export const courseState = atom<{isLoading: boolean, course: Course | null}>({
       course: null
     },
   });
+
+  export const drawerState = atom({
+    key : 'drawerState',
+    default : true
+})

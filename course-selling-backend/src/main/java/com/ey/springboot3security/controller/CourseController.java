@@ -59,4 +59,9 @@ public class CourseController {
 	public ResponseEntity<?> getCourses(@PathVariable("id") Integer courseId){
 		return Response.success(courseService.getCourse(courseId));
 	}
+	
+	@GetMapping("/getAnaylsis")
+	public ResponseEntity<?> getCourseAnaylsis(){
+		return Response.success(courseServiceImpl.getData());
+	}
 }

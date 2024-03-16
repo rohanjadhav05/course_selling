@@ -1,5 +1,5 @@
 import {selector} from "recoil";
-import { courseState, roleState } from "../atoms/course";
+import { courseState, drawerState, roleState } from "../atoms/course";
 
 export const isUserBoolean = selector({
     key : "isUserState",
@@ -7,6 +7,14 @@ export const isUserBoolean = selector({
         const state = get(roleState);
         return state;
     }
+})
+
+export const isDrawerBoolean = selector({
+  key : "isDrawerState",
+  get : ({get}) => {
+      const state = get(drawerState);
+      return state;
+  }
 })
 
 export const isCourseLoading = selector({

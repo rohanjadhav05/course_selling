@@ -141,7 +141,7 @@ const signup = () => {
                   <br/>
                   <div style={{display:'flex', justifyContent:"center"}}>
                       <GoogleLogin
-                      text='signup_with'
+                      text='continue_with'
                       shape='circle'
                       onSuccess={credentialResponse => {
                         onGoogleSucces(credentialResponse.credential);
@@ -149,9 +149,10 @@ const signup = () => {
                       onError={() => {
                         console.log('Login Failed');
                       }}
+                      theme='filled_blue'
+                      logo_alignment='left'
                     />
                   </div>
-                
             </Card>
           </div>
       </div>

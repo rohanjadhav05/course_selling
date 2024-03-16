@@ -13,6 +13,13 @@ export interface loginDto {
     username : string,
     password : string
 }
+
+export interface Sales {
+    courseName : string,
+    noOfStudents : number,
+    totalAmount : number
+}
+
 export const createUser = (userDto : userDto) => {
     return axios.post(REST_API_BASE_URL_HOME+"/signup", userDto);
 }

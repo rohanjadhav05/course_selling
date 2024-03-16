@@ -8,6 +8,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ey.springboot3security.dto.AnaylsisDto;
 import com.ey.springboot3security.dto.CourseDto;
 import com.ey.springboot3security.entity.Courses;
 import com.ey.springboot3security.exception.ResourceNotFoundException;
@@ -80,6 +81,10 @@ public class CourseServiceImpl implements CourseService {
 	public CourseDto getCourse(Integer id) {
 		Courses course = courseRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Course with Id not Found"));
 		return ModleMapper.mapToCourseDto(course);
+	}
+	
+	public List<AnaylsisDto> getData(){
+		return courseRepository.getCourseStatistics();
 	}
 
 }
