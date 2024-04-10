@@ -92,7 +92,7 @@ function UpdateCard() {
     console.log("object :  "+JSON.stringify(courseDetails, null, 2)+" published : "+published);
   }, [courseDetails]);
 
-  return <div style={{display: "flex", justifyContent: "center", marginLeft : drawerValue ? 175 : 0 }}>
+  return <div style={{display: "flex", justifyContent: "center" }}>
   <Card variant='outlined' style={{maxWidth: 600, marginTop: 200}}>
       <div style={{padding: 20}}>
           <Typography style={{marginBottom: 10}}>Update course details</Typography>

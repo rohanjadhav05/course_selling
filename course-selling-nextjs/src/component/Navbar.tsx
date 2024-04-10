@@ -7,22 +7,29 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import Link from '@mui/material/Link';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/router';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { drawerState } from '@/store/atoms/course';
 import { userState } from '@/store/atoms/user';
+import Avatar from 'react-avatar';
+import randomColor from 'randomcolor';
 
 function Navbar() {
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
   const router = useRouter();
   const [drawe, setDrawer] = useRecoilState(drawerState);
   const [User, setUser] = useRecoilState(userState);
+  const [initials, setInitials] = React.useState('');
+  const [color, setColor] = React.useState('');
+
   React.useEffect(() => {
-    console.log("is Logged in : "+Cookies.get('loginStatus'));
     if (Cookies.get('loginStatus') === '1') {
       setIsLoggedIn(true);
+    }
+    if(User.userEmail){
+      setInitials(User.userEmail!.charAt(0));
+      setColor(randomColor({ luminosity: 'light' }));
     }
   }, [Cookies.get('loginStatus')]);
 
@@ -63,8 +70,8 @@ function Navbar() {
             </Typography>
             {
               isLoggedIn &&
-                <AccountCircleIcon fontSize='medium' href="/profile"/>
-          }
+              <Avatar name={User.userEmail ? initials : 'No Name' } color={User.userEmail ? color : '#ccc'} size="40" round onClick={() => { router.push("/profile")}} />
+            }
           {
             !isLoggedIn &&
             < Button color="inherit" onClick={() => { router.push("/signin") }}

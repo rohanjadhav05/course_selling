@@ -24,7 +24,7 @@ export const createUser = (userDto : userDto) => {
     return axios.post(REST_API_BASE_URL_HOME+"/signup", userDto);
 }
 
-export const googleLogin = (token : string) => {
+export const googleLogin = (token : any) => {
     return axios.post(REST_API_BASE_URL_HOME+"/googleSuccess", token);
 }
 

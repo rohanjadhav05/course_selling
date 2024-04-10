@@ -8,6 +8,7 @@ import AddIcon from '@mui/icons-material/Add';
 import AttachMoneyOutlinedIcon from '@mui/icons-material/AttachMoneyOutlined';
 import { userState } from '@/store/atoms/user';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
+import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 
 const Sliderbar = () => {
   const router = useRouter();
@@ -25,6 +26,30 @@ const Sliderbar = () => {
     
             <div style={{ width: 200, height:'100vh', padding:20 ,paddingTop:100, backgroundColor:'#aeccf5', display: "block", justifyContent:"center"}}>
             <Typography style={{padding:20}}>Main Menu</Typography>
+
+            {
+              role ? 
+                    <Button
+                      variant="text"
+                        color="inherit"
+                        startIcon={<HomeOutlinedIcon sx={{ fontSize: 10 }} />}
+                        onClick={() => {
+                        router.push("/user"); }}>
+                          Home Page
+                    </Button>
+                    :
+
+                    <Button 
+                      variant="text"
+                        color="inherit"
+                        startIcon={<HomeOutlinedIcon sx={{ fontSize: 10 }} />}
+                        onClick={() => {
+                        router.push("/admin"); }}>
+                          Home Page
+                    </Button>
+            }
+            <br />
+            <br />
              { role ? 
                       <Button
                         variant="text"
@@ -33,7 +58,7 @@ const Sliderbar = () => {
                         onClick={() => {
                         router.push("/purchasedCourses");
                         }}>
-                          View Purchased Course
+                         Purchased Course
                         </Button>
                     : 
                       <Button

@@ -14,6 +14,7 @@ const Purchase = () => {
     const { courseId } = router.query;
     const [courseDetails, setCourse] = useRecoilState(courseState);
     const courseLoading = useRecoilValue(isCourseLoading);
+    const drawerValue = useRecoilValue(drawerState);
 
     useEffect(() => {
         getCourseById(courseId).then(res => {
@@ -34,7 +35,7 @@ const Purchase = () => {
     }
 
     return (
-        <div id="purchase" style={{paddingTop:100}}>
+        <div id="purchase" style={{paddingTop:100, paddingLeft : drawerValue ? 250 : 0 }}>
             <div style={{display:'flex', justifyContent:'center'}}>
                 <Typography variant='h3'>User Portal - Purchase course</Typography>
             </div>
@@ -68,7 +69,7 @@ function TextBox(){
     }, [courseDetails]);
 
     return (
-        <div id = "purchase" style={{ paddingLeft : drawerValue ? 250 : 0}}>
+        <div id = "purchase">
         <Card variant={"outlined"} style={{width: 400, padding: 20 }}>
                 <TextField
                         value={courseDetails.course?.courseName}
@@ -110,7 +111,7 @@ function TextBox(){
                             toast.success("coursed Purchased Succesfully");
                             router.push("/user");
                         }).catch(err => {
-                            toast.error("Failed");
+                            toast.error("Course Already Purchased");
                             console.error(err);
                         })
         

@@ -29,16 +29,16 @@ const signup = () => {
   
   function onGoogleSucces(response : any){
     googleLogin(response)
-      .then(response => {
-        const result = response.data;
+      .then((res) => {
+        const result = res.data;
         if(result.status == "success"){
-          Cookies.set('jwtToken', result.data.jwtToken, { expires: 1 }); // Expires in 7 days
-          Cookies.set('id', result['data'].id, { expires: 1 }); 
-          Cookies.set('loginStatus', "1", { expires: 1 });
+          Cookies.set('jwtToken', result.data.jwtToken, { expires: 7 }); // Expires in 7 days
+          Cookies.set('id', result['data'].id, { expires: 7 }); 
+          Cookies.set('loginStatus', "1", { expires: 7 });
           setIsUserRole(true);
           setUser({
             isLoading:false,
-            userEmail : result['data'].id
+            userEmail : result.data.email
           })
           toast.success("Successfully Login In");
           router.push("/user");

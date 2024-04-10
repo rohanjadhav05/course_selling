@@ -98,6 +98,7 @@
 				</configuration>
 			</plugin>
 		</plugins>
+		<finalName>course_selling</finalName>
 	</build>
 
 </project>

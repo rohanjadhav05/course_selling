@@ -9,6 +9,7 @@ export const getAllcourses = () => {
     return axios.get(REST_API_BASE_URL_ADMIN+"/getAllCourse", header);
 }
 
+
 export const getCourseById = (courseId : any) => {
     return axios.get(REST_API_BASE_URL_ADMIN+`/getCourse/${courseId}`, header);
 }

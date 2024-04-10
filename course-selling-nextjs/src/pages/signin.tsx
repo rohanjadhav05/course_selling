@@ -7,9 +7,9 @@ import { useRouter } from "next/navigation";
 import { Card } from "@mui/material";
 import { googleLogin, login } from "@/service/HomeService";
 import Cookies from 'js-cookie';
-import { useSetRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { roleState } from "@/store/atoms/course";
-import { userState } from "@/store/atoms/user";
+import { UserState, userState } from "@/store/atoms/user";
 import { GoogleLogin } from "@react-oauth/google";
 import axios from "axios";
 
@@ -19,36 +19,36 @@ const signin = () => {
   const [password, SetPassword] = useState('');
   const router = useRouter();
   const setIsUserRole = useSetRecoilState(roleState);
-  const setUser = useSetRecoilState(userState);
-  const setEmail = useSetRecoilState(userState);
+  const [user, setUser] = useRecoilState<UserState>(userState);
 
-  function onGoogleSucces(response : any){
-    console.log(response);
-    googleLogin(response)
-      .then(response => {
-        const result = response.data;
-        if(result.status == "success"){
-          Cookies.set('jwtToken', result.data.jwtToken, { expires: 1 }); // Expires in 7 days
-          Cookies.set('id', result['data'].id, { expires: 1 }); 
-          Cookies.set('loginStatus', "1", { expires: 1 });
-          setIsUserRole(true);
-          setUser({
-            isLoading:false,
-            userEmail : result['data'].id
-          })
-          setEmail(result['data'].id);
-          toast.success("Successfully Login In");
-          router.push("/user");
-          
-        }
-        else{
-          toast.error("Failed");
-        }
-      })
-      .catch(err => {
-        console.log(err);
-      })
+  async function onGoogleSuccess(response: any) {
+    try {
+      const res = await googleLogin(response);
+      const result = res.data;
+      console.log(result.data);
+      
+      if (result.status === "success") {
+        Cookies.set('jwtToken', result.data.jwtToken, { expires: 7 }); // Expires in 1 day
+        Cookies.set('id', result.data.id, { expires: 7 });
+        Cookies.set('loginStatus', "1", { expires: 7 });
+        console.log("email : " + result.data.email);
+        
+        setUser(prevUser => ({
+          ...prevUser,
+          isLoading: false,
+          userEmail: result.data.email
+        }));
+        setIsUserRole(true);
+        toast.success("Successfully Logged In");
+        router.push("/user");
+      } else {
+        toast.error("Login Failed");
+      }
+    } catch (err) {
+      console.log(err);
+    }
   }
+  
 
   return <div>
   <div style={{
@@ -130,8 +130,7 @@ const signin = () => {
                             text='signup_with'
                             shape='circle'
                             onSuccess={credentialResponse => {
-                              console.log(credentialResponse.credential);
-                              onGoogleSucces(credentialResponse.credential);
+                              onGoogleSuccess(credentialResponse.credential);
                             }}
                             onError={() => {
                               console.log('Login Failed');
