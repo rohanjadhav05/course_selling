@@ -2,6 +2,7 @@
     background-color: cornflowerblue;
     padding: 10px;
     text-align: center;
+    justify-content: center;
 }
 
 .centered-text{
